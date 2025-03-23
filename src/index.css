@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* .ant-btn-color-link.ant-btn-variant-link {
+  color: black;
+}
+.ant-btn-color-link.ant-btn-variant-link:not(:disabled):not(.ant-btn-disabled):active {
+  color: #029354;
+} */
