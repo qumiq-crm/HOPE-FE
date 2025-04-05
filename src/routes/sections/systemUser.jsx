@@ -4,14 +4,17 @@ import { Skeleton } from "antd";
 import { Navigate, Outlet } from "react-router-dom";
 import { paths } from "../paths";
 import HomePage from "../../pages/dashboard/HomePage";
+import AdminLayout from "../../layouts/AdminLayout";
 
 export const systemUserRoutes = [
   {
     path: "",
     element: (
-      <Suspense fallback={<Skeleton />}>
-        <Outlet />
-      </Suspense>
+      <AdminLayout>
+        <Suspense fallback={<Skeleton />}>
+          <Outlet />
+        </Suspense>
+      </AdminLayout>
     ),
     children: [
       {
