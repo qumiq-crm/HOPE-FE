@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Suspense, useState } from "react";
 
 import {
@@ -10,6 +11,8 @@ import { Flex, Pagination, Tooltip, Typography } from "antd";
 import ProductHeader from "../../components/products/ProductHeader";
 import ProductModal from "../../components/products/ProductModal";
 import GenericTable from "../../components/common/GenericTable";
+import { formattedDateOnly, formattedTime } from "../../utils/dateFormat";
+import ConfirmationModal from "../../components/common/modals/ConfirmationModal";
 
 const Product = () => {
   const initialValues = {
@@ -23,41 +26,41 @@ const Product = () => {
   const [openModal, setOpenModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
   const [modalData, setModalData] = useState();
-  const { searchText, updateSearchText } = useDebounceSearch(setFilters);
+  // const { searchText, updateSearchText } = useDebounceSearch(setFilters);
 
-  const {
-    isLoading,
-    tableData,
-    count,
-    updateActiveStatus,
-    deleteDoc,
-    setRefresh,
-    downloadReport,
-  } = useGetProduct(filters);
-  const {
-    categoryData,
-    vendorData,
-    updateProducts,
-    allVendors,
-    createProducts,
-  } = useUpdateProduct({ searchCategories: "", searchVendors: "" });
-  const { loading, getProductImage, productImages } = useGetProductImages();
-  const { handlePageChange, handleTableChange } = useFilter({ setFilters });
-  const handleActive = (prodId, status) => {
-    let active;
-    if (status === 1 || status === true) active = false;
-    else active = true;
-    updateActiveStatus({ prodId, status: active });
-  };
-  const handleEdit = (record) => {
-    setModalData(record);
-    getProductImage(record.id);
-    setOpenModal(true);
-  };
-  const handleDelete = () => {
-    deleteDoc(modalData?.id);
-    setDeleteModal(false);
-  };
+  // const {
+  //   isLoading,
+  //   tableData,
+  //   count,
+  //   updateActiveStatus,
+  //   deleteDoc,
+  //   setRefresh,
+  //   downloadReport,
+  // } = useGetProduct(filters);
+  // const {
+  //   categoryData,
+  //   vendorData,
+  //   updateProducts,
+  //   allVendors,
+  //   createProducts,
+  // } = useUpdateProduct({ searchCategories: "", searchVendors: "" });
+  // const { loading, getProductImage, productImages } = useGetProductImages();
+  // const { handlePageChange, handleTableChange } = useFilter({ setFilters });
+  // const handleActive = (prodId, status) => {
+  //   let active;
+  //   if (status === 1 || status === true) active = false;
+  //   else active = true;
+  //   updateActiveStatus({ prodId, status: active });
+  // };
+  // const handleEdit = (record) => {
+  //   setModalData(record);
+  //   getProductImage(record.id);
+  //   setOpenModal(true);
+  // };
+  // const handleDelete = () => {
+  //   deleteDoc(modalData?.id);
+  //   setDeleteModal(false);
+  // };
   const columns = [
     {
       title: "Date",
@@ -123,12 +126,12 @@ const Product = () => {
             {status === 1 || status === true ? (
               <CheckOutlined
                 className={`cursor-pointer ${"text-gray-400"}`}
-                onClick={() => handleActive(record.id, record.status)}
+                // onClick={() => handleActive(record.id, record.status)}
               />
             ) : (
               <CloseOutlined
                 className={`cursor-pointer ${"text-brandColor"}`}
-                onClick={() => handleActive(record.id, record.status)}
+                // onClick={() => handleActive(record.id, record.status)}
               />
             )}
           </span>
@@ -143,7 +146,9 @@ const Product = () => {
         <Flex justify="space-between">
           <Tooltip placement="top">
             <span>
-              <EditOutlined onClick={() => handleEdit(record)} />
+              <EditOutlined
+              // onClick={() => handleEdit(record)}
+              />
             </span>
           </Tooltip>
           <Tooltip placement="top">
@@ -164,43 +169,43 @@ const Product = () => {
   return (
     <Flex vertical gap={20}>
       <ProductHeader
-        downloadReport={downloadReport}
-        allVendors={allVendors}
-        createProducts={createProducts}
-        updateProducts={updateProducts}
-        vendorData={vendorData}
-        categoryData={categoryData}
-        setRefresh={setRefresh}
-        handleSearch={updateSearchText}
-        searchText={searchText}
+      // createProducts={createProducts}
+      // updateProducts={updateProducts}
+      // vendorData={vendorData}
+      // categoryData={categoryData}
+      // setRefresh={setRefresh}
+      // handleSearch={updateSearchText}
+      // searchText={searchText}
       />
-      <GenericTable
-        rowKey={(record) => record.id}
-        columns={columns}
-        dataSource={tableData}
-        pagination={false}
-        loading={isLoading || loading}
-        scroll={{ x: "max-content" }}
-        onChange={handleTableChange}
-      />
-      <Pagination
-        current={filters.page}
-        size="default"
-        className="text-end pt-7"
-        onChange={handlePageChange}
-        total={count}
-        showSizeChanger={false}
-      />
+      <Flex vertical className="md:px-10">
+        <GenericTable
+          rowKey={(record) => record.id}
+          columns={columns}
+          dataSource={[]}
+          pagination={false}
+          // loading={isLoading || loading}
+          scroll={{ x: "max-content" }}
+          // onChange={handleTableChange}
+        />
+        <Pagination
+          current={filters.page}
+          size="default"
+          className="text-end pt-7"
+          // onChange={handlePageChange}
+          // total={count}
+          showSizeChanger={false}
+        />
+      </Flex>
       <Suspense>
         {openModal && (
           <ProductModal
-            productImages={productImages}
-            createProducts={createProducts}
-            allVendors={allVendors}
-            categoryData={categoryData}
-            updateProducts={updateProducts}
-            vendorData={vendorData}
-            setRefresh={setRefresh}
+            // productImages={productImages}
+            // createProducts={createProducts}
+            // allVendors={allVendors}
+            // categoryData={categoryData}
+            // updateProducts={updateProducts}
+            // vendorData={vendorData}
+            // setRefresh={setRefresh}
             data={modalData}
             open={openModal}
             handleCancel={() => setOpenModal(false)}
@@ -210,7 +215,7 @@ const Product = () => {
 
       {deleteModal && (
         <ConfirmationModal
-          handleSubmit={handleDelete}
+          // handleSubmit={handleDelete}
           handleCancel={() => setDeleteModal(false)}
           isOpen={deleteModal}
           title="Do you want to proceed with the deletion?"

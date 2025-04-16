@@ -1,29 +1,25 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { Form, Skeleton } from "antd";
 
-import SelectInput from "@components/atomic/inputs/SelectInput";
-import TextAreaInput from "@components/atomic/inputs/TextAreaInput";
-import TextInput from "@components/atomic/inputs/TextInput";
-import CustomModalWithForm from "@components/molecular/modals/CustomModalWithForm";
-
-import AddVendorDetails from "./AddVendorDetails";
-import ProductSchema from "../../schema/ProductSchema";
+import TextInput from "../common/inputs/TextInput";
+import TextAreaInput from "../common/inputs/TextAreaInput";
+import SelectInput from "../common/inputs/SelectInput";
+import CustomModalWithForm from "../common/modals/CustomModalWithForm";
+import FileUploadInput from "../common/inputs/FileUploadInput";
 const ProductModal = ({
   open,
   handleCancel,
   data,
   categoryData,
-  vendorData,
   productImages,
 }) => {
-
-
   return (
     <CustomModalWithForm
       reinitialise
       modalTitle="Product Management"
       open={open}
-      validationSchema={ProductSchema}
+      // validationSchema={ProductSchema}
       handleCancel={handleCancel}
       handleFormSubmit={async () => {}}
       initialValues={{
@@ -34,29 +30,17 @@ const ProductModal = ({
         highlights: data?.highlights || "",
         warranty: data?.warranty || "",
         SKUCode: data?.SKUCode || "",
+        price: data?.price || "",
         categoryId: data?.categoryId.toString() || "",
-        priceExcludedVat: "",
         quantity: data?.quantity || "",
         discountType: data?.discountType || "",
         discount: data?.discount || "",
-        vatType: data?.vatType || "",
         productImage1: data?.productImage || "",
         productImage2: "",
         productImage3: "",
-        VAT: data?.VAT || "",
         productImageFormat1: productImages?.productImage1,
         productImageFormat2: productImages?.productImage2,
         productImageFormat3: productImages?.productImage3,
-        vendors:
-          data?.vendors && data?.vendors.length > 0
-            ? data?.vendors
-            : [
-                {
-                  id: "",
-                  price: "",
-                  name: "",
-                },
-              ],
       }}
     >
       {({ values }) => (
@@ -121,8 +105,8 @@ const ProductModal = ({
           )}
           <TextInput
             allowTwoDecimalsOnly
-            name="priceExcludedVat"
-            label="Price (Excluded VAT)"
+            name="price"
+            label="Price"
             type="text"
             placeholder="Please enter amount"
             isRequired
@@ -159,55 +143,27 @@ const ProductModal = ({
             classes=" rounded-sm"
             maxLength={10}
           />
-          <SelectInput
-            name="vatType"
-            isRequired
-            options={[
-              { value: "PERCENTAGE", label: "Percentage" },
-              { value: "CUSTOM", label: "Flat" },
-            ]}
-            placeholder="Please select a VAT type"
-            label="VAT type"
-          />
-          <TextInput
-            allowTwoDecimalsOnly
-            name="VAT"
-            label="VAT "
-            type="text"
-            placeholder="Please enter VAT"
-            isRequired
-            maxLength={10}
-          />
-          <AddVendorDetails values={values.vendors} vendorData={vendorData} />
-          {/* <CustomFileUploadInput
-            existingFileUrl={productImages?.productImage1}
-            label="Product Image 1"
+          <FileUploadInput
             name="productImage1"
-            setFile={setFile}
-            format="format1"
-            showNotification
+            format="productImageFormat1"
+            label="Upload Image 1"
             showFileName
+            allowFileDelete
           />
-
-          <CustomFileUploadInput
-            existingFileUrl={productImages?.productImage2}
-            label="Product Image 2"
+          <FileUploadInput
             name="productImage2"
-            setFile={setFile}
-            format="format2"
-            showNotification
+            format="productImageFormat2"
+            label="Upload Image 2"
             showFileName
+            allowFileDelete
           />
-
-          <CustomFileUploadInput
-            existingFileUrl={productImages?.productImage3}
-            label="Product Image 3"
+          <FileUploadInput
             name="productImage3"
-            setFile={setFile}
-            format="format3"
-            showNotification
+            format="productImageFormat3"
+            label="Upload Image 3"
             showFileName
-          /> */}
+            allowFileDelete
+          />
         </Form>
       )}
     </CustomModalWithForm>

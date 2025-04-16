@@ -3,8 +3,8 @@ import { Suspense } from "react";
 import { Skeleton } from "antd";
 import { Navigate, Outlet } from "react-router-dom";
 import { paths } from "../paths";
-import HomePage from "../../pages/dashboard/HomePage";
 import AdminLayout from "../../layouts/AdminLayout";
+import Product from "../../pages/admin/Product";
 
 export const systemUserRoutes = [
   {
@@ -20,7 +20,7 @@ export const systemUserRoutes = [
       {
         element: <Navigate to={paths.admin.dashboard} replace />,
       },
-      { element: <HomePage />, path: paths.admin.dashboard },
+      { element: <Product />, path: paths.admin.dashboard },
     ],
   },
 ];

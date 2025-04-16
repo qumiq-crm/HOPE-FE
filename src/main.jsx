@@ -5,6 +5,7 @@ import App from "./App.jsx";
 import AntdConfig from "./antd.config.jsx";
 import { BrowserRouter } from "react-router-dom";
 import { Skeleton } from "antd";
+import { Toaster } from "react-hot-toast";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -12,6 +13,7 @@ createRoot(document.getElementById("root")).render(
       <BrowserRouter>
         <Suspense fallback={<Skeleton />}>
           <App />
+          <Toaster />
         </Suspense>
       </BrowserRouter>
     </AntdConfig>
