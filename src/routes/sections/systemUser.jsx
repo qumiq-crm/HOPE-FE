@@ -8,7 +8,7 @@ import Product from "../../pages/admin/Product";
 
 export const systemUserRoutes = [
   {
-    path: "",
+    path: paths.admin.index,
     element: (
       <AdminLayout>
         <Suspense fallback={<Skeleton />}>
@@ -18,9 +18,12 @@ export const systemUserRoutes = [
     ),
     children: [
       {
-        element: <Navigate to={paths.admin.dashboard} replace />,
+        index: true,
+        element: <Navigate to={paths.admin.products} replace />,
       },
-      { element: <Product />, path: paths.admin.dashboard },
+      { element: <Product />, path: paths.admin.products },
+      { element: <Product />, path: paths.admin.categories },
+      { element: <Product />, path: paths.admin.banners },
     ],
   },
 ];

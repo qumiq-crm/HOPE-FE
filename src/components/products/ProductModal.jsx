@@ -6,24 +6,33 @@ import TextInput from "../common/inputs/TextInput";
 import TextAreaInput from "../common/inputs/TextAreaInput";
 import SelectInput from "../common/inputs/SelectInput";
 import CustomModalWithForm from "../common/modals/CustomModalWithForm";
-import FileUploadInput from "../common/inputs/FileUploadInput";
+// import FileUploadInput from "../common/inputs/FileUploadInput";
+import { productSchema } from "../../schemas";
 const ProductModal = ({
   open,
   handleCancel,
   data,
   categoryData,
   productImages,
+  handleCreatePrd,
+  handleUpdatePrd,
 }) => {
   return (
     <CustomModalWithForm
       reinitialise
       modalTitle="Product Management"
       open={open}
-      // validationSchema={ProductSchema}
+      validationSchema={productSchema}
       handleCancel={handleCancel}
-      handleFormSubmit={async () => {}}
+      handleFormSubmit={async (values) => {
+        if (data && data._id) {
+          await handleUpdatePrd(data._id, values);
+        } else {
+          await handleCreatePrd(values);
+        }
+      }}
       initialValues={{
-        id: data?.id || "",
+        _id: data?._id || "",
         name: data?.name || "",
         brand: data?.brand || "",
         description: data?.description || "",
@@ -31,16 +40,16 @@ const ProductModal = ({
         warranty: data?.warranty || "",
         SKUCode: data?.SKUCode || "",
         price: data?.price || "",
-        categoryId: data?.categoryId.toString() || "",
+        categoryId: data?.categoryId?.toString() || "1",
         quantity: data?.quantity || "",
         discountType: data?.discountType || "",
-        discount: data?.discount || "",
-        productImage1: data?.productImage || "",
-        productImage2: "",
-        productImage3: "",
-        productImageFormat1: productImages?.productImage1,
-        productImageFormat2: productImages?.productImage2,
-        productImageFormat3: productImages?.productImage3,
+        discount: `${data?.discount}` || "",
+        // productImage1: data?.productImage || "",
+        // productImage2: "",
+        // productImage3: "",
+        // productImageFormat1: productImages?.productImage1,
+        // productImageFormat2: productImages?.productImage2,
+        // productImageFormat3: productImages?.productImage3,
       }}
     >
       {({ values }) => (
@@ -53,14 +62,13 @@ const ProductModal = ({
             isRequired
             classes=" rounded-sm"
             maxLength={50}
-            // allowedInputKeys={value => value.replace(/^(?=.*[a-zA-Z0-9])[a-zA-Z0-9\s!@#$%^&*()\-_=+[\]{};:'",.<>?/|`~]*$/, '')}
+            allowAlphabetsAndSpaceOnly
           />
           <TextInput
             name="brand"
-            label="Brand Name"
+            label="Brand Name (Optional)"
             type="text"
             placeholder="Please enter brand "
-            isRequired
             classes=" rounded-sm"
             maxLength={50}
           />
@@ -80,7 +88,7 @@ const ProductModal = ({
           />
           <TextAreaInput
             name="warranty"
-            label="Warranty"
+            label="Warranty (Optional)"
             placeholder="Please enter warranty"
             maxLength={350}
           />
@@ -143,7 +151,7 @@ const ProductModal = ({
             classes=" rounded-sm"
             maxLength={10}
           />
-          <FileUploadInput
+          {/* <FileUploadInput
             name="productImage1"
             format="productImageFormat1"
             label="Upload Image 1"
@@ -163,7 +171,7 @@ const ProductModal = ({
             label="Upload Image 3"
             showFileName
             allowFileDelete
-          />
+          /> */}
         </Form>
       )}
     </CustomModalWithForm>

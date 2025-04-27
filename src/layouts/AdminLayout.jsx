@@ -11,7 +11,8 @@ import {
   Typography,
 } from "antd";
 import Logo from "../assets/Logo-1.png";
-import { Link } from "react-router-dom";
+import LogoutIcon from "../assets/icons/Logout.svg";
+import { Link, useNavigate } from "react-router-dom";
 import {
   FacebookFilled,
   InstagramOutlined,
@@ -21,8 +22,17 @@ import {
 } from "@ant-design/icons";
 import APPSTORE from "../assets/app-store.png";
 import PLAYSTORE from "../assets/play-store.png";
+import { paths } from "../routes/paths";
+import { useState } from "react";
+import notify from "../hooks/useNotifyToast";
 
 const { Text, Title } = Typography;
+
+const navigationItems = [
+  { key: `${paths.admin.products}`, label: "PRODUCTS" },
+  { key: `${paths.admin.categories}`, label: "CATEGORIES" },
+  { key: `${paths.admin.banners}`, label: "BANNERS" },
+];
 
 const aboutLinks = [
   "Our Story",
@@ -47,6 +57,9 @@ const customerCareLinks = [
 const offersLinks = ["Plant Parent Rewards Club", "Ugaoo Coupons"];
 
 const AdminLayout = ({ children }) => {
+  const [activeTab, setActiveTab] = useState(`${paths.admin.products}`);
+  const navigate = useNavigate();
+
   return (
     <Flex vertical>
       <div className="min-h-screen">
@@ -54,40 +67,53 @@ const AdminLayout = ({ children }) => {
           className="w-full px-2 xl:px-60  bg-[#FFF6F4]"
           justify="space-between"
         >
-          <Col xs={24} lg={24} className="flex justify-center items-center">
-            <Image
-              src={Logo}
-              height={90}
-              alt="Hope Logo"
-              className="h-8"
-              preview={false}
-            />
+          <Col xs={24} lg={4} className="flex justify-center items-center">
+            <Link
+              to={paths.admin.products}
+              onClick={() => setActiveTab(`${paths.admin.products}`)}
+            >
+              <Image
+                src={Logo}
+                height={90}
+                alt="Hope Logo"
+                className="h-8"
+                preview={false}
+              />
+            </Link>
           </Col>
-          {/* <Col xs={24} lg={14} className="flex justify-center items-center">
-          <Row
-            justify="center"
-            align="middle"
-            gutter={[30, 12]}
-            className="space-x-4 pb-2"
-          >
-            {navigationItems.map((item) => (
-              <Typography.Text
-                key={item.key}
-                onClick={() => {
-                  setActiveTab(item.key);
-                  navigate(item.key);
+          <Col xs={24} lg={14} className="flex justify-center items-center">
+            <Row
+              justify="center"
+              align="middle"
+              gutter={[30, 12]}
+              className="space-x-4 pb-2"
+            >
+              {navigationItems.map((item) => (
+                <Typography.Text
+                  key={item.key}
+                  onClick={() => {
+                    setActiveTab(item.key);
+                    navigate(item.key);
+                  }}
+                  className={`cursor-pointer text-sm font-medium ${
+                    activeTab === item.key
+                      ? "border-b-2 text-[#029354] border-[#029354]"
+                      : "text-gray-500"
+                  }`}
+                >
+                  {item.label}
+                </Typography.Text>
+              ))}
+              <Image
+                src={LogoutIcon}
+                preview={false}
+                onClick={async () => {
+                  notify("Admin logged out!", "success");
                 }}
-                className={`cursor-pointer text-sm font-medium ${
-                  activeTab === item.key
-                    ? "border-b-2 text-[#029354] border-[#029354]"
-                    : "text-gray-500"
-                }`}
-              >
-                {item.label}
-              </Typography.Text>
-            ))}
-          </Row>
-        </Col> */}
+                className="pl-4 cursor-pointer"
+              />
+            </Row>
+          </Col>
         </Row>
         <div className="">{children}</div>
       </div>

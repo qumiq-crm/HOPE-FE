@@ -59,56 +59,59 @@ const DashboardLayout = ({ children }) => {
 
   const offersLinks = ["Plant Parent Rewards Club", "Ugaoo Coupons"];
   return (
-    <Flex vertical className="min-h-screen">
-      <Row
-        className="w-full px-2 xl:px-60  bg-[#FFF6F4]"
-        justify="space-between"
-      >
-        <Col xs={24} lg={4} className="flex justify-center items-center">
-          <Image
-            src={Logo}
-            height={90}
-            alt="Hope Logo"
-            className="h-8"
-            preview={false}
-          />
-        </Col>
-        <Col xs={24} lg={14} className="flex justify-center items-center">
-          <Row
-            justify="center"
-            align="middle"
-            gutter={[30, 12]}
-            className="space-x-4 pb-2"
-          >
-            {navigationItems.map((item) => (
-              <Typography.Text
-                key={item.key}
-                onClick={() => {
-                  setActiveTab(item.key);
-                  navigate(item.key);
-                }}
-                className={`cursor-pointer text-sm font-medium ${
-                  activeTab === item.key
-                    ? "border-b-2 text-[#029354] border-[#029354]"
-                    : "text-gray-500"
-                }`}
-              >
-                {item.label}
-              </Typography.Text>
-            ))}
-          </Row>
-        </Col>
+    <Flex vertical>
+      <div className="min-h-screen">
+        <Row
+          className="w-full px-2 xl:px-60  bg-[#FFF6F4]"
+          justify="space-between"
+        >
+          <Col xs={24} lg={4} className="flex justify-center items-center">
+            <Link to="/" onClick={() => setActiveTab(undefined)}>
+              <Image
+                src={Logo}
+                height={90}
+                alt="Hope Logo"
+                className="h-8"
+                preview={false}
+              />
+            </Link>
+          </Col>
+          <Col xs={24} lg={14} className="flex justify-center items-center">
+            <Row
+              justify="center"
+              align="middle"
+              gutter={[30, 12]}
+              className="space-x-4 pb-2"
+            >
+              {navigationItems.map((item) => (
+                <Typography.Text
+                  key={item.key}
+                  onClick={() => {
+                    setActiveTab(item.key);
+                    navigate(item.key);
+                  }}
+                  className={`cursor-pointer text-sm font-medium ${
+                    activeTab === item.key
+                      ? "border-b-2 text-[#029354] border-[#029354]"
+                      : "text-gray-500"
+                  }`}
+                >
+                  {item.label}
+                </Typography.Text>
+              ))}
+            </Row>
+          </Col>
 
-        <Col xs={24} lg={6} className="flex justify-center items-center">
-          <Row>
-            {/* <Flex justify="center" className={`${!screens.lg && "w-full"}`}>
+          <Col xs={24} lg={6} className="flex justify-center items-center">
+            <Row>
+              {/* <Flex justify="center" className={`${!screens.lg && "w-full"}`}>
               <Input
                 placeholder="Search for plants, seeds and planters..."
                 prefix={<SearchOutlined />}
                 className=""
               />
             </Flex> */}
-            {/* <Flex justify="center" className={`${!screens.lg && "w-full"}`} gap={10}>
+              {/* <Flex justify="center" className={`${!screens.lg && "w-full"}`} gap={10}>
               <Button type="primary" className="rounded-full px-2 py-5 flex items-center gap-1 text-2xl text-white cursor-pointer">
                 <ShoppingCartOutlined />
               </Button>
@@ -116,10 +119,11 @@ const DashboardLayout = ({ children }) => {
                 <InboxOutlined />
               </Button>
             </Flex> */}
-          </Row>
-        </Col>
-      </Row>
-      {children}
+            </Row>
+          </Col>
+        </Row>
+        {children}
+      </div>
       <Row className="bg-white py-12 px-4">
         <Flex vertical className="max-w-7xl mx-auto w-full">
           <Row gutter={[48, 48]}>

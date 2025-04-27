@@ -10,10 +10,9 @@ const ProductHeader = ({
   searchText,
   handleSearch,
   categoryData,
-  updateProducts,
-  vendorData,
-  createProducts,
   setRefresh,
+  handleCreatePrd,
+  handleUpdatePrd,
 }) => {
   const [openModal, setOpenModal] = useState(false);
   return (
@@ -36,7 +35,7 @@ const ProductHeader = ({
             value={searchText}
             placeholder="Search "
             suffix={<SearchOutlined />}
-            onChange={handleSearch}
+            onChange={(e) => handleSearch(e.target.value)}
             allowClear
             type="text"
             variant="outlined"
@@ -44,7 +43,11 @@ const ProductHeader = ({
           />
         </Col>
         <Col span={24} md={2}>
-          <Button type="primary" className="w-full sm:w-fit" onClick={() => setOpenModal(true)}>
+          <Button
+            type="primary"
+            className="w-full sm:w-fit"
+            onClick={() => setOpenModal(true)}
+          >
             Add New Product
           </Button>
         </Col>
@@ -52,13 +55,12 @@ const ProductHeader = ({
       <Suspense>
         {openModal && (
           <ProductModal
-            createProducts={createProducts}
             categoryData={categoryData}
-            updateProducts={updateProducts}
-            vendorData={vendorData}
             open={openModal}
             handleCancel={() => setOpenModal(false)}
             setRefresh={setRefresh}
+            handleCreatePrd={handleCreatePrd}
+            handleUpdatePrd={handleUpdatePrd}
           />
         )}
       </Suspense>

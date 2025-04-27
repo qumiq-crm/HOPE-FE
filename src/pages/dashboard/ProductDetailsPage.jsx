@@ -1,5 +1,4 @@
 import {
-  Avatar,
   Button,
   Card,
   Col,
@@ -7,9 +6,9 @@ import {
   Flex,
   Grid,
   Image,
-  Input,
   Rate,
   Row,
+  Skeleton,
   Space,
   Tag,
   Typography,
@@ -20,29 +19,42 @@ import cashBack from "../../assets/icons/ExtraCashback.svg";
 import { formatNumberWithLocalString } from "../../utils/priceFormat";
 import { CreditCardFilled } from "@ant-design/icons";
 import { bestsellerProducts } from "../../utils/dummy-data";
+import { useLocation } from "react-router-dom";
+import useProductDetails from "../../hooks/useProductsDetails";
 
 const { useBreakpoint } = Grid;
 const ProductDetailsPage = () => {
+  const { prdId } = useLocation().state;
   const { Text } = Typography;
   const screens = useBreakpoint();
+  const { loading, product } = useProductDetails({ productId: prdId });
+  if (loading) {
+    return (
+      <>
+        {[...Array(5)].map((_, index) => (
+          <Skeleton key={index} active />
+        ))}
+      </>
+    );
+  }
   return (
     <Content>
       <Row align="middle" gutter={24} className="mt-6 px-2 xl:px-72">
-        <Col xs={24} md={9} className="flex flex-col align-middle p-0">
+        <Col xs={24} md={12} className="flex flex-col align-middle p-0">
           <Card size="small" className="rounded-2xl p-0">
             <Image
-              src="https://www.ugaoo.com/cdn/shop/files/3_95c81721-0beb-47c4-8eae-3efad6742baf.jpg?v=1717308876&width=360"
+              src=""
               alt="No image available"
               width="100%"
-              height={260}
+              height={340}
               className="object-contain "
-              // fallback={defaultImage}
+              fallback="https://www.ugaoo.com/cdn/shop/files/3_95c81721-0beb-47c4-8eae-3efad6742baf.jpg?v=1717308876&width=360"
             />
             <Flex gap={10} justify="center">
               {[2, 3, 4, 6]?.map((image, index) => (
                 <Image
                   key={index}
-                  src="https://www.ugaoo.com/cdn/shop/files/3_95c81721-0beb-47c4-8eae-3efad6742baf.jpg?v=1717308876&width=360"
+                  src=""
                   alt="prd"
                   // onClick={() => setSelectedImageIndex(index)}
                   role="button"
@@ -50,24 +62,24 @@ const ProductDetailsPage = () => {
                   width={70}
                   height={70}
                   className="object-contain hover:border hover:rounded-lg"
-                  // fallback={defaultImage}
+                  fallback="https://www.ugaoo.com/cdn/shop/files/3_95c81721-0beb-47c4-8eae-3efad6742baf.jpg?v=1717308876&width=360"
                 />
               ))}
             </Flex>
           </Card>
         </Col>
-        <Col xs={24} md={15} className="xs:pt-8 md:pt-0">
+        <Col xs={24} md={12} className="xs:pt-8 md:pt-0">
           <Flex gap={7} vertical>
             <Text className="text-base text-productText font-medium">
-              {"productDetails?.brand"}
+              {product?.highlights}
             </Text>
             <Text className="xs:lg md:text-xl line-clamp-3 mt-2">
-              {"productDetails?.name"}
+              {product?.name}
             </Text>
           </Flex>
           {screens.md ? (
             <>
-              <Flex vertical className="mt-3 hidden">
+              {/* <Flex vertical className="mt-3 hidden">
                 <Text
                   strong
                   className="font-roboto text-gray-400 text-xs font-light"
@@ -83,7 +95,7 @@ const ProductDetailsPage = () => {
                     />
                   ))}
                 </Flex>
-              </Flex>
+              </Flex> */}
 
               <Flex gap={20} vertical>
                 <Flex
@@ -92,7 +104,7 @@ const ProductDetailsPage = () => {
                   align="center"
                   className="mx-0 mt-5"
                 >
-                  {parseFloat(10) > 0 && (
+                  {Number(product?.discount || 0) > 0 && (
                     <Flex justify="center" align="center" gap={10}>
                       <Image
                         preview={false}
@@ -100,7 +112,12 @@ const ProductDetailsPage = () => {
                         alt="Save flat icon"
                       />
                       <Text className="text-textDimGreen text-base">
-                        Save ₹ {formatNumberWithLocalString(10)}
+                        Save ₹{" "}
+                        {formatNumberWithLocalString(
+                          product.discountType == "PERCENTAGE"
+                            ? Number((product.price * product.discount) / 100)
+                            : Number(product.discount)
+                        )}
                       </Text>
                     </Flex>
                   )}
@@ -115,16 +132,22 @@ const ProductDetailsPage = () => {
               <Flex gap={5} vertical className="mt-5">
                 <Flex gap={15} align="baseline" className="mx-0">
                   <Text className="text-neutral-950 text-2xl font-medium">
-                    ₹ {formatNumberWithLocalString(100)}
+                    ₹{" "}
+                    {formatNumberWithLocalString(
+                      Number(product.price) -
+                        (product.discountType == "PERCENTAGE"
+                          ? Number((product.price * product.discount) / 100)
+                          : Number(product.discount))
+                    )}
                   </Text>
-                  {100 !== 90 && (
+                  {Number(product.discount) > 0 && (
                     <Text className="text-productText text-base">
                       Real price
                       <Text
                         delete
                         className="text-productText text-base strike ms-2"
                       >
-                        ₹ {100}
+                        ₹ {product.price}
                       </Text>
                     </Text>
                   )}
@@ -140,15 +163,14 @@ const ProductDetailsPage = () => {
                   standard delivery charge.
                 </Text>
                 <Flex gap={10} className="m-0 p-0">
-                  {5 > 1 && (
+                  {Number(product.quantity) > 0 && (
                     <Button
                       type="primary"
                       size="large"
                       className="px-8 py-2 p-2"
-                      disabled={5 < 1}
-                        onClick={() => {
-                          window.location.href = `https://wa.me/+919995144332?text=I_would_like_to_order_a_product_[PRD${127878123}]`
-                        }}
+                      onClick={() => {
+                        window.location.href = `https://wa.me/+919995144332?text=I_would_like_to_order_a_product_[${product?.SKUCode}]`;
+                      }}
                     >
                       Order Now
                     </Button>
@@ -164,15 +186,19 @@ const ProductDetailsPage = () => {
                 className="mb-6 items-center"
               >
                 <Col span={24}>
-                  <Space size={8} className="flex-row items-center">
+                  <Space size={8} className="flex-row items-end">
                     <Typography.Text
                       delete
-                      className="text-textGray text-xl font-roboto"
+                      className="text-textGray text-lg font-roboto"
                     >
-                      ₹ {100}
+                      ₹ {product.price}
                     </Typography.Text>
-                    <Typography.Text className="text-textBlack font-semibold text-xl">
-                      ₹ {90}
+                    <Typography.Text className="text-textBlack font-semibold text-2xl">
+                      ₹{" "}
+                      {Number(product.price) -
+                        (product.discountType == "PERCENTAGE"
+                          ? Number((product.price * product.discount) / 100)
+                          : Number(product.discount))}
                     </Typography.Text>
                   </Space>
                 </Col>
@@ -187,7 +213,12 @@ const ProductDetailsPage = () => {
                         className="w-6"
                       />
                       <Typography.Text className="text-textDimGreen font-roboto text-xs">
-                        Save ₹ {10}
+                        Save ₹{" "}
+                        {formatNumberWithLocalString(
+                          product.discountType == "PERCENTAGE"
+                            ? Number((product.price * product.discount) / 100)
+                            : Number(product.discount)
+                        )}
                       </Typography.Text>
                     </Flex>
                   </Col>
@@ -206,33 +237,6 @@ const ProductDetailsPage = () => {
                   </Col>
                 </Row>
               </Row>
-              <Flex align="center" className="my-2 hidden" gap={10}>
-                <Col>
-                  <Typography.Text
-                    strong
-                    className="font-roboto text-gray-400 text-xs font-light"
-                  >
-                    Select your colour:{" "}
-                  </Typography.Text>
-                  <Flex gap={5} align="center" className="mt-2">
-                    {["red", "yellow", "green"].map((color, index) => (
-                      <Avatar
-                        key={index}
-                        style={{ backgroundColor: color }}
-                        size={25}
-                      />
-                    ))}
-                  </Flex>
-                </Col>
-                <Col>
-                  <Input
-                    min={1}
-                    max={10}
-                    className="rounded-lg"
-                    // onChange={value => handleUpdateQuantity(value!)}
-                  />
-                </Col>
-              </Flex>
               <Row className="mt-2">
                 <Typography.Text className="text-textBlack font-inter font-normal text-base">
                   This item will be delivered within 2 to 4 working days with
@@ -247,14 +251,20 @@ const ProductDetailsPage = () => {
         <Col xs={24} sm={24} md={0} lg={0} xl={0}>
           <Button
             type="primary"
-            className="font-roboto h-14 rounded-sm w-full rounded-l-none px-0 flex justify-center gap-2 items-center"
-            // onClick={() => {
-            //   buyProducts(productDetails.id);
-            // }}
-            loading={false}
+            className="font-roboto h-14 rounded-sm w-full rounded-l-none px-0 flex justify-center items-center"
+            onClick={() => {
+              window.location.href = `https://wa.me/+919995144332?text=I_would_like_to_order_a_product_[${product?.SKUCode}]`;
+            }}
+            disabled={!(Number(product.quantity) > 0)}
           >
-            <CreditCardFilled />
-            Buy Now
+            {Number(product.quantity) > 0 ? (
+              <span className="flex gap-2">
+                <CreditCardFilled />
+                Buy Now
+              </span>
+            ) : (
+              "Out Of Stock"
+            )}
           </Button>
         </Col>
       </Row>
@@ -269,12 +279,7 @@ const ProductDetailsPage = () => {
             About the Product
           </Typography.Text>
           <Typography.Text className="text-gray-400 text-center text-lg">
-            About the Product About the Product the Product About the Product
-            the Product About the Product the Product About the Product the
-            the Product About the Product the Product About the Product the
-            the Product About the Product the Product About the Product the
-            the Product About the Product the Product About the Product the
-            Product About the Product{" "}
+            {product.description}
           </Typography.Text>
         </Flex>
       </Row>

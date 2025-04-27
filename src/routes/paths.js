@@ -19,9 +19,8 @@ export const paths = {
   },
   admin: {
     index: `${ROOTS.ADMIN}`,
-    dashboard: `${ROOTS.ADMIN}/dashboard`,
-    reports: `${ROOTS.ADMIN}/reports`,
-    support: `${ROOTS.ADMIN}/support`,
-    manage: `${ROOTS.ADMIN}/manage`,
+    products: `${ROOTS.ADMIN}/products`,
+    categories: `${ROOTS.ADMIN}/categories`,
+    banners: `${ROOTS.ADMIN}/banners`,
   },
 };
