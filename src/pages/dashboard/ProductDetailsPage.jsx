@@ -169,7 +169,7 @@ const ProductDetailsPage = () => {
                       size="large"
                       className="px-8 py-2 p-2"
                       onClick={() => {
-                        window.location.href = `https://wa.me/+919995144332?text=I_would_like_to_order_a_product_[${product?.SKUCode}]`;
+                        window.location.href = `https://wa.me/+919995144332?text=${product?.name.split(" ").join("%20")}`;
                       }}
                     >
                       Order Now
@@ -253,7 +253,7 @@ const ProductDetailsPage = () => {
             type="primary"
             className="font-roboto h-14 rounded-sm w-full rounded-l-none px-0 flex justify-center items-center"
             onClick={() => {
-              window.location.href = `https://wa.me/+919995144332?text=I_would_like_to_order_a_product_[${product?.SKUCode}]`;
+              window.location.href = `https://wa.me/+919995144332?text=${product?.name.split(" ").join("%20")}%20[${product?.SKUCode}]`;
             }}
             disabled={!(Number(product.quantity) > 0)}
           >

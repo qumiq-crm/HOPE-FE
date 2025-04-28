@@ -1,7 +1,7 @@
 import * as Yup from "yup";
 
 // Reusable regex
-const alphabets = /^[a-zA-Z\s]+$/;
+const alphabets = /^[a-zA-Z0-9\s\-_.,!&'()]+$/;
 
 export const productSchema = Yup.object().shape({
   name: Yup.string()
@@ -82,7 +82,7 @@ export const productSchema = Yup.object().shape({
       (value) => !/^\s/.test(value || "")
     ),
 
-  categoryId: Yup.string().required("Please select a category"),
+  category: Yup.string().required("Please select a category"),
 
   price: Yup.number()
     .typeError("Price must be a valid number")
@@ -104,4 +104,36 @@ export const productSchema = Yup.object().shape({
     .required("Please enter the discount")
     .min(0, "Discount cannot be negative")
     .max(1000000000, "Discount value is too large"),
+});
+
+export const categorySchema = Yup.object().shape({
+  name: Yup.string()
+    .required("Please enter the category name")
+    .min(3, "Category name must be at least 3 characters")
+    .max(50, "Maximum 50 characters are allowed")
+    .matches(alphabets, "Please enter a valid name")
+    .test(
+      "no-leading-whitespace",
+      "Name cannot start with whitespace",
+      (value) => !/^\s/.test(value || "")
+    )
+    .test(
+      "no-multiple-whitespace",
+      "Name cannot contain consecutive whitespaces",
+      (value) => !/\s{2,}/.test(value || "")
+    )
+    .test(
+      "not-only-whitespace",
+      "Name cannot be only whitespace",
+      (value) => !/^\s*$/.test(value || "")
+    ),
+  description: Yup.string()
+    .required("Please enter the description")
+    .min(3, "Description must be at least 3 characters")
+    .max(350, "Maximum 350 characters are allowed")
+    .test(
+      "no-leading-whitespace",
+      "Description cannot start with whitespace",
+      (value) => !/^\s/.test(value || "")
+    ),
 });

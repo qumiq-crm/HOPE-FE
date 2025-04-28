@@ -14,6 +14,7 @@ import {
   Input,
   List,
   Row,
+  Skeleton,
   Space,
   Typography,
 } from "antd";
@@ -21,21 +22,15 @@ import Logo from "../assets/Logo-1.png";
 import APPSTORE from "../assets/app-store.png";
 import PLAYSTORE from "../assets/play-store.png";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { paths } from "../routes/paths";
+import useCategoryList from "../hooks/useCategoryList";
 
 const DashboardLayout = ({ children }) => {
-  const [activeTab, setActiveTab] = useState();
+  const [activeTab, setActiveTab] = useState(undefined);
   const navigate = useNavigate();
   const { Text, Title } = Typography;
-
-  const navigationItems = [
-    { key: `${paths.dashboard.products}?cat=plants`, label: "PLANTS" },
-    { key: `${paths.dashboard.products}?cat=seeds`, label: "SEEDS" },
-    { key: `${paths.dashboard.products}?cat=pots`, label: "POTS & PLANTERS" },
-    { key: `${paths.dashboard.products}?cat=care`, label: "PLANT CARE" },
-    { key: paths.dashboard.blogs, label: "BLOG" },
-  ];
+  const { categories, loading } = useCategoryList(true);
 
   const aboutLinks = [
     "Our Story",
@@ -58,6 +53,9 @@ const DashboardLayout = ({ children }) => {
   ];
 
   const offersLinks = ["Plant Parent Rewards Club", "Ugaoo Coupons"];
+  useEffect(() => {
+    console.log(categories, activeTab);
+  }, [activeTab]);
   return (
     <Flex vertical>
       <div className="min-h-screen">
@@ -83,22 +81,29 @@ const DashboardLayout = ({ children }) => {
               gutter={[30, 12]}
               className="space-x-4 pb-2"
             >
-              {navigationItems.map((item) => (
-                <Typography.Text
-                  key={item.key}
-                  onClick={() => {
-                    setActiveTab(item.key);
-                    navigate(item.key);
-                  }}
-                  className={`cursor-pointer text-sm font-medium ${
-                    activeTab === item.key
-                      ? "border-b-2 text-[#029354] border-[#029354]"
-                      : "text-gray-500"
-                  }`}
-                >
-                  {item.label}
-                </Typography.Text>
-              ))}
+              {loading && <Skeleton active />}
+              {!loading &&
+                categories.map((item, i) => (
+                  <Typography.Text
+                    key={i}
+                    onClick={() => {
+                      setActiveTab(i + 1);
+                      navigate(`${paths.dashboard.products}?cat=${item?._id}`, {
+                        state: {
+                          categoryName: item?.name,
+                          categoryDesc: item?.description,
+                        },
+                      });
+                    }}
+                    className={`cursor-pointer uppercase text-sm font-medium ${
+                      activeTab === i + 1
+                        ? "border-b-2 text-[#029354] border-[#029354]"
+                        : "text-gray-500"
+                    }`}
+                  >
+                    {item.name}
+                  </Typography.Text>
+                ))}
             </Row>
           </Col>
 

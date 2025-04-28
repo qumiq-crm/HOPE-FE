@@ -18,26 +18,33 @@ import {
 } from "antd";
 import { Content } from "antd/es/layout/layout";
 import { SearchOutlined } from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { paths } from "../../routes/paths";
 import useProduct from "../../hooks/useProducts";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const { useBreakpoint } = Grid;
 
 const ProductsPage = () => {
+  const { search, state } = useLocation();
+  let categoryName;
+  let categoryDesc;
+  if (state) {
+    categoryName = state?.categoryName;
+    categoryDesc = state?.categoryDesc;
+  }
   const initialValues = {
     limit: 10,
     offset: 1,
     searchText: "",
-    catIds: [],
+    selectedCat: "",
     sortBy: "",
     isActiveOnly: true,
   };
   const [filters, setFilters] = useState(initialValues);
   const screens = useBreakpoint();
   const navigate = useNavigate();
-  const { loading, products, totalCount } = useProduct(filters);
+  const { loading, products, totalCount, refetch } = useProduct(filters);
 
   const updateSearchText = (query) => {
     setFilters((prev) => ({
@@ -45,6 +52,17 @@ const ProductsPage = () => {
       searchText: query,
     }));
   };
+  useEffect(() => {
+    const query = new URLSearchParams(search);
+    const category = query.get("cat") || ""; // fallback if cat is missing
+
+    setFilters((prev) => ({
+      ...prev,
+      selectedCat: category,
+    }));
+    refetch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [search]);
   return (
     <Content>
       <Flex vertical className="pt-5 pb-10 mb-5 bg-emerald-50/50">
@@ -52,13 +70,11 @@ const ProductsPage = () => {
           level={screens.lg ? 1 : 3}
           className="text-center text-[#0a4c36] mb-8"
         >
-          Bestsellers
+          {categoryName || "Hope Products"}
         </Typography.Title>
         <Typography.Text className="text-lg text-center px-2 xl:px-72 ">
-          Plants make for the best house companions, suitable for all your moods
-          and every aesthetic. Ugaoo, an online website for decorative plants,
-          offers a wide variety of plants so that you can buy plants online from
-          the comfort of your home!
+          {categoryDesc ||
+            "Discover a wide range of high-quality products tailored to meet your needs. Whether you're looking for the latest trends or everyday essentials, our collection is carefully curated to offer the best choices. Browse through categories, explore detailed descriptions, and find exactly what you're looking for with ease. Shop with confidence knowing that quality, value, and customer satisfaction are at the heart of everything we offer."}
         </Typography.Text>
       </Flex>
       <Flex vertical className="px-2 xl:px-60">

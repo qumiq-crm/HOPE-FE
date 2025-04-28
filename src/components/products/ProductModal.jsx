@@ -30,9 +30,10 @@ const ProductModal = ({
         } else {
           await handleCreatePrd(values);
         }
+        handleCancel();
       }}
       initialValues={{
-        _id: data?._id || "",
+        _id: data?._id,
         name: data?.name || "",
         brand: data?.brand || "",
         description: data?.description || "",
@@ -40,10 +41,13 @@ const ProductModal = ({
         warranty: data?.warranty || "",
         SKUCode: data?.SKUCode || "",
         price: data?.price || "",
-        categoryId: data?.categoryId?.toString() || "1",
+        category: data?.category?._id?.toString() || "",
         quantity: data?.quantity || "",
         discountType: data?.discountType || "",
-        discount: `${data?.discount}` || "",
+        discount:
+          data?.discount || Number(data?.discount) === 0
+            ? `${data?.discount}`
+            : "",
         // productImage1: data?.productImage || "",
         // productImage2: "",
         // productImage3: "",
@@ -99,12 +103,16 @@ const ProductModal = ({
             placeholder="Please enter SKU Code "
             classes=" rounded-sm"
             maxLength={50}
+            isRequired
           />
           {categoryData ? (
             <SelectInput
               isRequired
-              name="categoryId"
-              options={categoryData}
+              name="category"
+              options={categoryData.map((cat) => ({
+                label: cat?.name,
+                value: cat?._id,
+              }))}
               placeholder="Please select a category"
               label="Category"
             />

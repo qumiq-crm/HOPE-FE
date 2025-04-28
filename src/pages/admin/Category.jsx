@@ -8,15 +8,13 @@ import {
   EditOutlined,
 } from "@ant-design/icons";
 import { Flex, Pagination, Tooltip, Typography } from "antd";
-import ProductHeader from "../../components/products/ProductHeader";
-import ProductModal from "../../components/products/ProductModal";
 import GenericTable from "../../components/common/GenericTable";
 import { formattedDateOnly, formattedTime } from "../../utils/dateFormat";
-import ConfirmationModal from "../../components/common/modals/ConfirmationModal";
-import useProduct from "../../hooks/useProducts";
-import useCategoryList from "../../hooks/useCategoryList";
+import useCategory from "../../hooks/useCategory";
+import CategoryHeader from "../../components/categories/CategoryHeader";
+import CategoryModal from "../../components/categories/CategoryModal";
 
-const Product = () => {
+const Category = () => {
   const initialValues = {
     limit: 10,
     offset: 1,
@@ -27,14 +25,14 @@ const Product = () => {
   };
   const [filters, setFilters] = useState(initialValues);
   const [openModal, setOpenModal] = useState(false);
-  const [deleteModal, setDeleteModal] = useState(false);
+  // const [deleteModal, setDeleteModal] = useState(false);
   const [modalData, setModalData] = useState();
 
-  const handleActive = (prodId, status) => {
+  const handleActive = (catId, status) => {
     let active;
     if (status === 1 || status === true) active = false;
     else active = true;
-    handleUpdatePrd(prodId, { isActive: active });
+    handleUpdateCat(catId, { isActive: active });
   };
   const handleEdit = (record) => {
     setModalData(record);
@@ -46,13 +44,8 @@ const Product = () => {
       searchText: query,
     }));
   };
-  const { loading, products, handleCreatePrd, handleUpdatePrd, refetch } =
-    useProduct(filters);
-  const { categories } = useCategoryList();
-  useEffect(()=>{
-    refetch()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[])
+  const { categories, loading, handleCreateCat, handleUpdateCat } =
+    useCategory(filters);
   const columns = [
     {
       title: "Date",
@@ -72,7 +65,7 @@ const Product = () => {
       ),
     },
     {
-      title: "Product Name",
+      title: "Category Name",
       dataIndex: "name",
       key: "name",
     },
@@ -81,28 +74,6 @@ const Product = () => {
       visibilityToggle: true,
       dataIndex: "description",
       key: "description",
-    },
-    {
-      title: "Category Name",
-      visibilityToggle: true,
-      dataIndex: ["category", "name"],
-      key: "category",
-      render: (_, data) => (
-        <Typography.Text>
-          {data?.category?.name || "N/A"}
-        </Typography.Text>
-      ),
-    },
-    {
-      title: "Quantity",
-      dataIndex: "quantity",
-      key: "quantity",
-    },
-    {
-      title: "Price",
-      dataIndex: "price",
-      key: "price",
-      render: (price) => <Typography.Text>AED {price}</Typography.Text>,
     },
     {
       title: "Status",
@@ -154,23 +125,19 @@ const Product = () => {
   ];
   return (
     <Flex vertical gap={20}>
-      <ProductHeader
-        categoryData={categories}
+      <CategoryHeader
         // setRefresh={setRefresh}
         handleSearch={updateSearchText}
-        handleCreatePrd={handleCreatePrd}
-        handleUpdatePrd={handleUpdatePrd}
+        handleCreateCat={handleCreateCat}
+        handleUpdateCat={handleUpdateCat}
       />
       <Flex vertical className="md:px-10">
         <GenericTable
           rowKey={(record) => record._id}
           columns={columns}
-          dataSource={products}
+          dataSource={categories}
           pagination={false}
           loading={loading}
-          onChange={(e) => {
-            console.log(e);
-          }}
         />
         <Pagination
           current={filters.page}
@@ -183,20 +150,18 @@ const Product = () => {
       </Flex>
       <Suspense>
         {openModal && (
-          <ProductModal
-            // productImages={productImages}
-            categoryData={categories}
+          <CategoryModal
             // setRefresh={setRefresh}
             data={modalData}
             open={openModal}
             handleCancel={() => setOpenModal(false)}
-            handleCreatePrd={handleCreatePrd}
-            handleUpdatePrd={handleUpdatePrd}
+            handleCreateCat={handleCreateCat}
+            handleUpdateCat={handleUpdateCat}
           />
         )}
       </Suspense>
 
-      {deleteModal && (
+      {/* {deleteModal && (
         <ConfirmationModal
           // handleSubmit={handleDelete}
           handleCancel={() => setDeleteModal(false)}
@@ -204,9 +169,9 @@ const Product = () => {
           title="Do you want to proceed with the deletion?"
           isLoading={false}
         />
-      )}
+      )} */}
     </Flex>
   );
 };
 
-export default Product;
+export default Category;

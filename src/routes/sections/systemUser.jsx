@@ -5,6 +5,7 @@ import { Navigate, Outlet } from "react-router-dom";
 import { paths } from "../paths";
 import AdminLayout from "../../layouts/AdminLayout";
 import Product from "../../pages/admin/Product";
+import Category from "../../pages/admin/Category";
 
 export const systemUserRoutes = [
   {
@@ -22,7 +23,7 @@ export const systemUserRoutes = [
         element: <Navigate to={paths.admin.products} replace />,
       },
       { element: <Product />, path: paths.admin.products },
-      { element: <Product />, path: paths.admin.categories },
+      { element: <Category />, path: paths.admin.categories },
       { element: <Product />, path: paths.admin.banners },
     ],
   },
