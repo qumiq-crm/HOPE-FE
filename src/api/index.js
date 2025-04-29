@@ -57,6 +57,16 @@ export const createProductApi = async (payload) => {
   }
 };
 
+export const authenticateAdmin = async (payload) => {
+  try {
+    const resp = await ApiClient.post(`user/auth`, payload);
+    const { data } = resp;
+    return data;
+  } catch (err) {
+    return false;
+  }
+};
+
 export const updateProductApi = async (productId, payload) => {
   try {
     const resp = await ApiClient.put(`product/${productId}`, payload);

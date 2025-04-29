@@ -23,8 +23,9 @@ import {
 import APPSTORE from "../assets/app-store.png";
 import PLAYSTORE from "../assets/play-store.png";
 import { paths } from "../routes/paths";
+import AuthenticationModal from "../components/common/modals/AuthenticationModal";
+import useAuth from "../hooks/useAuth";
 import { useState } from "react";
-import notify from "../hooks/useNotifyToast";
 
 const { Text, Title } = Typography;
 
@@ -59,6 +60,8 @@ const offersLinks = ["Plant Parent Rewards Club", "Ugaoo Coupons"];
 const AdminLayout = ({ children }) => {
   const [activeTab, setActiveTab] = useState(`${paths.admin.products}`);
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+  const { loading, handleAuth, handleLogout } = useAuth();
 
   return (
     <Flex vertical>
@@ -107,15 +110,23 @@ const AdminLayout = ({ children }) => {
               <Image
                 src={LogoutIcon}
                 preview={false}
-                onClick={async () => {
-                  notify("Admin logged out!", "success");
-                }}
+                onClick={async () => handleLogout()}
                 className="pl-4 cursor-pointer"
               />
             </Row>
           </Col>
         </Row>
-        <div className="">{children}</div>
+        {token ? (
+          <div className="">{children}</div>
+        ) : (
+          <AuthenticationModal
+            isOpen
+            title="Authentication Required"
+            description="Please enter the password to continue."
+            handleSubmit={handleAuth}
+            isLoading={loading}
+          />
+        )}
       </div>
       <Row className="bg-white py-12 px-4">
         <Flex vertical className="max-w-7xl mx-auto w-full">
