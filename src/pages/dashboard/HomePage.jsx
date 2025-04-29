@@ -8,15 +8,13 @@ import {
   Image,
   Rate,
   Row,
+  Skeleton,
   Space,
   Tag,
   Typography,
 } from "antd";
 import { Content } from "antd/es/layout/layout";
 import {
-  bestsellerProducts,
-  categories,
-  categoryData,
   homePageCarousel,
   homePageCarouselForMobile,
 } from "../../utils/dummy-data";
@@ -27,6 +25,7 @@ import {
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { paths } from "../../routes/paths";
+import useDashboard from "../../hooks/useDashboard";
 // import { useNavigate } from "react-router-dom";
 
 const contentStyle = {
@@ -41,6 +40,7 @@ const { useBreakpoint } = Grid;
 const HomePage = () => {
   const screens = useBreakpoint();
   const navigate = useNavigate();
+  const { categories, loading, newArrivals } = useDashboard();
 
   const features = [
     {
@@ -115,32 +115,44 @@ const HomePage = () => {
               </Flex>
             ))}
       </Carousel>
-      <Flex className="px-2 xl:px-60 mt-12" justify="center">
-        <Row gutter={[10, 10]} className="xl:px-8 mb-12 justify-center w-full">
-          {categoryData.map((category, index) => (
-            <Col key={index} xs={12} md={8} lg={6} xl={3}>
-              <Flex
-                vertical
-                className="text-center cursor-pointer"
-                justify="center"
-              >
-                <Flex justify="center">
-                  <Image
-                    src={category.image}
-                    alt={category.title}
-                    preview={false}
-                    width={screens.lg ? 140 : 110}
-                  />
-                </Flex>
-                <Typography.Text className="text-xl">
-                  {category.title}
-                </Typography.Text>
-              </Flex>
-            </Col>
+      {loading ? (
+        <>
+          {[...Array(5)].map((_, index) => (
+            <Skeleton key={index} active />
           ))}
-        </Row>
-      </Flex>
-      <Flex vertical className="px-2 xl:px-60 ">
+        </>
+      ) : (
+        <>
+          <Flex className="px-2 xl:px-60 mt-12" justify="center">
+            <Row
+              gutter={[10, 10]}
+              className="xl:px-8 mb-12 justify-center w-full"
+            >
+              {categories.map((category, index) => (
+                <Col key={index} xs={12} md={8} lg={6} xl={3}>
+                  <Flex
+                    vertical
+                    className="text-center cursor-pointer"
+                    justify="center"
+                  >
+                    <Flex justify="center">
+                      <Image
+                        src={category.image}
+                        alt={category.name}
+                        preview={false}
+                        width={screens.lg ? 140 : 110}
+                        fallback="https://www.ugaoo.com/cdn/shop/files/2._Bestseller_0153b41a-9169-49f4-a322-5415b827d8bf.png?v=1739970441&width=360"
+                      />
+                    </Flex>
+                    <Typography.Text className="text-xl">
+                      {category.name}
+                    </Typography.Text>
+                  </Flex>
+                </Col>
+              ))}
+            </Row>
+          </Flex>
+          {/* <Flex vertical className="px-2 xl:px-60 ">
         <Typography.Title
           level={screens.lg ? 1 : 3}
           className="text-center text-[#0a4c36] mb-8 "
@@ -166,72 +178,111 @@ const HomePage = () => {
             </Col>
           ))}
         </Row>
-      </Flex>
+      </Flex> */}
 
-      <Flex vertical className="px-2 xl:px-60 mt-14">
-        <Typography.Title
-          level={screens.lg ? 1 : 3}
-          className="text-center text-[#0a4c36] mb-8"
-        >
-          Bestsellers
-        </Typography.Title>
-        <Row gutter={[24, 24]} className="justify-center">
-          {bestsellerProducts.map((product, index) => (
-            <Col xs={24} sm={12} lg={8} xl={8} key={index}>
-              <Card
-                cover={
-                  <Image
-                    src={product.image}
-                    alt={product.title}
-                    preview={false}
-                  />
-                }
-                className="relative"
+          <Flex vertical className="px-2 xl:px-60 mt-14">
+            <Typography.Title
+              level={screens.lg ? 1 : 3}
+              className="text-center text-[#0a4c36] mb-8"
+            >
+              New Arrivals
+            </Typography.Title>
+            <Row gutter={[24, 24]} className="justify-center">
+              {newArrivals.map((product, index) => (
+                <Col xs={24} sm={12} lg={8} xl={8} key={index}>
+                  <Card
+                    cover={
+                      <Image
+                        src={product.image}
+                        alt={product.name}
+                        preview={false}
+                        fallback="https://www.ugaoo.com/cdn/shop/files/2_72x-100.jpg?v=1739860291&width=360"
+                      />
+                    }
+                    className="relative"
+                  >
+                    {product.highlights && (
+                      <Tag className="absolute top-4 right-4 bg-yellow-400 px-2 py-1 rounded">
+                        {product.highlights}
+                      </Tag>
+                    )}
+                    {product.discount && product.discountType ? (
+                      <Tag className="absolute top-4 left-4 bg-yellow-400 px-2 py-1 rounded">
+                        OFF{" "}
+                        {product.discountType == "PERCENTAGE"
+                          ? `${product.discount}%`
+                          : `${product.discount}/-`}
+                      </Tag>
+                    ) : (
+                      ""
+                    )}
+
+                    <Space
+                      direction="vertical"
+                      className="flex justify-center items-center w-full"
+                    >
+                      <Typography.Title level={4}>
+                        {product.name}
+                      </Typography.Title>
+                      <Flex gap={5} align="end">
+                        {Number(product.discount) > 0 ? (
+                          <Typography.Text delete className="text-gray-400">
+                            ₹ {product.price}
+                          </Typography.Text>
+                        ) : (
+                          ""
+                        )}
+                        <Typography.Text
+                          strong
+                          className="text-lg text-[#149253]"
+                        >
+                          From ₹{" "}
+                          {Number(product.price) -
+                            (product.discountType == "PERCENTAGE"
+                              ? Number((product.price * product.discount) / 100)
+                              : Number(product.discount))}
+                        </Typography.Text>
+                      </Flex>
+                      <Rate
+                        disabled
+                        allowHalf
+                        defaultValue={(Math.random() * 2 + 3).toFixed(1)}
+                      />
+                      <Button
+                        type="primary"
+                        size="large"
+                        className="lg:px-24"
+                        onClick={() =>
+                          navigate(
+                            `${paths.dashboard.products}/${paths.products.details}`,
+                            {
+                              state: {
+                                prdId: product._id,
+                              },
+                            }
+                          )
+                        }
+                      >
+                        VIEW PRODUCT
+                      </Button>
+                    </Space>
+                  </Card>
+                </Col>
+              ))}
+            </Row>
+            <Flex className="mt-8" justify="center">
+              <Button
+                type="primary"
+                size="large"
+                className="lg:px-16"
+                onClick={() => navigate(paths.dashboard.products)}
               >
-                {product.tag && (
-                  <Tag className="absolute top-4 right-4 bg-yellow-400 px-2 py-1 rounded">
-                    {product.tag}
-                  </Tag>
-                )}
-                {product.discount && (
-                  <Tag className="absolute top-4 left-4 bg-yellow-400 px-2 py-1 rounded">
-                    {product.discount}
-                  </Tag>
-                )}
-
-                <Space
-                  direction="vertical"
-                  className="flex justify-center items-center w-full"
-                >
-                  <Typography.Title level={4}>{product.title}</Typography.Title>
-                  <Flex gap={5} align="end">
-                    <Typography.Text delete className="text-gray-400">
-                      ₹ {product.originalPrice}
-                    </Typography.Text>
-                    <Typography.Text strong className="text-lg text-[#149253]">
-                      From ₹ {product.price}
-                    </Typography.Text>
-                  </Flex>
-                  <Rate disabled defaultValue={product.rating} />
-                  <Button type="primary" size="large" className="lg:px-24">
-                    VIEW PRODUCT
-                  </Button>
-                </Space>
-              </Card>
-            </Col>
-          ))}
-        </Row>
-        <Flex className="mt-8" justify="center">
-          <Button
-            type="primary"
-            size="large"
-            className="lg:px-16"
-            onClick={() => navigate(paths.dashboard.products)}
-          >
-            VIEW ALL
-          </Button>
-        </Flex>
-      </Flex>
+                VIEW ALL
+              </Button>
+            </Flex>
+          </Flex>
+        </>
+      )}
 
       <Flex
         vertical

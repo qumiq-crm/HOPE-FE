@@ -28,6 +28,16 @@ export const getAllCategories = async (isActiveOnly) => {
   }
 };
 
+export const getDashDetails = async () => {
+  try {
+    const resp = await ApiClient.get(`product/dashboard`);
+    const { data } = resp;
+    return data;
+  } catch (err) {
+    return false;
+  }
+};
+
 export const getProductList = async (payload) => {
   try {
     const {
