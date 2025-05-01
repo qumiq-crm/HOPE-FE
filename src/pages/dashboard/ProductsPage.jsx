@@ -10,7 +10,6 @@ import {
   Pagination,
   Rate,
   Row,
-  Select,
   Skeleton,
   Space,
   Tag,
@@ -26,25 +25,27 @@ import { useEffect, useState } from "react";
 const { useBreakpoint } = Grid;
 
 const ProductsPage = () => {
-  const { search, state } = useLocation();
+  const { state } = useLocation();
   let categoryName;
   let categoryDesc;
+  let categoryId;
   if (state) {
     categoryName = state?.categoryName;
     categoryDesc = state?.categoryDesc;
+    categoryId = state?.categoryId;
   }
   const initialValues = {
     limit: 10,
     offset: 1,
     searchText: "",
-    selectedCat: "",
+    selectedCat: categoryId || "",
     sortBy: "",
     isActiveOnly: true,
   };
   const [filters, setFilters] = useState(initialValues);
   const screens = useBreakpoint();
   const navigate = useNavigate();
-  const { loading, products, totalCount, refetch } = useProduct(filters);
+  const { loading, products, totalCount } = useProduct(filters);
 
   const updateSearchText = (query) => {
     setFilters((prev) => ({
@@ -52,17 +53,15 @@ const ProductsPage = () => {
       searchText: query,
     }));
   };
-  useEffect(() => {
-    const query = new URLSearchParams(search);
-    const category = query.get("cat") || ""; // fallback if cat is missing
 
-    setFilters((prev) => ({
-      ...prev,
-      selectedCat: category,
-    }));
-    refetch();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [search]);
+  useEffect(() => {
+    console.log({state});
+    
+    if (state?.categoryId) {
+      console.log({state},1);
+      setFilters((val) => ({ ...val, selectedCat: state?.categoryId }));
+    }
+  }, [state]);
   return (
     <Content>
       <Flex vertical className="pt-5 pb-10 mb-5 bg-emerald-50/50">
@@ -89,7 +88,7 @@ const ProductsPage = () => {
             variant="outlined"
             maxLength={100}
           />
-          <Select
+          {/* <Select
             placeholder="Sort By"
             options={[
               { label: "Default", value: "default" },
@@ -98,7 +97,7 @@ const ProductsPage = () => {
               { label: "Default4", value: "default4" },
             ]}
             size="large"
-          />
+          /> */}
         </Flex>
         {!loading && products.length ? (
           <>
@@ -109,11 +108,11 @@ const ProductsPage = () => {
                     cover={
                       <Image
                         src={
-                          product.image ||
-                          "https://www.ugaoo.com/cdn/shop/files/2_72x-100.jpg?v=1739860291&width=360"
+                          product?.images?.[0]
                         }
                         alt={product.name}
                         preview={false}
+                        fallback="https://www.ugaoo.com/cdn/shop/files/2_72x-100.jpg?v=1739860291&width=360"
                       />
                     }
                     className="relative border-0"

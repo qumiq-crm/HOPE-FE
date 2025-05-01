@@ -32,7 +32,7 @@ const { Text, Title } = Typography;
 const navigationItems = [
   { key: `${paths.admin.products}`, label: "PRODUCTS" },
   { key: `${paths.admin.categories}`, label: "CATEGORIES" },
-  { key: `${paths.admin.banners}`, label: "BANNERS" },
+  // { key: `${paths.admin.banners}`, label: "BANNERS" },
 ];
 
 const aboutLinks = [

@@ -8,6 +8,7 @@ import SelectInput from "../common/inputs/SelectInput";
 import CustomModalWithForm from "../common/modals/CustomModalWithForm";
 // import FileUploadInput from "../common/inputs/FileUploadInput";
 import { productSchema } from "../../schemas";
+import FileUploadInput from "../common/inputs/FileUploadInput";
 const ProductModal = ({
   open,
   handleCancel,
@@ -37,6 +38,7 @@ const ProductModal = ({
         name: data?.name || "",
         brand: data?.brand || "",
         description: data?.description || "",
+        images: data?.images || [],
         highlights: data?.highlights || "",
         warranty: data?.warranty || "",
         SKUCode: data?.SKUCode || "",
@@ -48,12 +50,12 @@ const ProductModal = ({
           data?.discount || Number(data?.discount) === 0
             ? `${data?.discount}`
             : "",
-        // productImage1: data?.productImage || "",
-        // productImage2: "",
-        // productImage3: "",
-        // productImageFormat1: productImages?.productImage1,
-        // productImageFormat2: productImages?.productImage2,
-        // productImageFormat3: productImages?.productImage3,
+        productImage1: data?.images[0] || "",
+        productImage2: data?.images[1] || "",
+        productImage3: data?.images[2] || "",
+        productImageFormat1: "",
+        productImageFormat2: "",
+        productImageFormat3: "",
       }}
     >
       {({ values }) => (
@@ -83,12 +85,11 @@ const ProductModal = ({
             isRequired
             maxLength={350}
           />
-          <TextAreaInput
+          <TextInput
             name="highlights"
             label="Highlights"
             placeholder="Please enter highlights"
-            isRequired
-            maxLength={350}
+            maxLength={50}
           />
           <TextAreaInput
             name="warranty"
@@ -159,10 +160,11 @@ const ProductModal = ({
             classes=" rounded-sm"
             maxLength={10}
           />
-          {/* <FileUploadInput
+          <FileUploadInput
             name="productImage1"
             format="productImageFormat1"
             label="Upload Image 1"
+            defaultFileName="Image-1"
             showFileName
             allowFileDelete
           />
@@ -170,6 +172,7 @@ const ProductModal = ({
             name="productImage2"
             format="productImageFormat2"
             label="Upload Image 2"
+            defaultFileName="Image-2"
             showFileName
             allowFileDelete
           />
@@ -177,9 +180,10 @@ const ProductModal = ({
             name="productImage3"
             format="productImageFormat3"
             label="Upload Image 3"
+            defaultFileName="Image-3"
             showFileName
             allowFileDelete
-          /> */}
+          />
         </Form>
       )}
     </CustomModalWithForm>

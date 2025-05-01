@@ -134,6 +134,15 @@ const HomePage = () => {
                     vertical
                     className="text-center cursor-pointer"
                     justify="center"
+                    onClick={() =>
+                      navigate(paths.dashboard.products, {
+                        state: {
+                          categoryName: category?.name,
+                          categoryDesc: category?.description,
+                          categoryId: category?._id,
+                        },
+                      })
+                    }
                   >
                     <Flex justify="center">
                       <Image
@@ -193,7 +202,7 @@ const HomePage = () => {
                   <Card
                     cover={
                       <Image
-                        src={product.image}
+                        src={product.images?.[0]}
                         alt={product.name}
                         preview={false}
                         fallback="https://www.ugaoo.com/cdn/shop/files/2_72x-100.jpg?v=1739860291&width=360"

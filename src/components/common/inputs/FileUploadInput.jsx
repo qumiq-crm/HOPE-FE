@@ -6,7 +6,7 @@ import { Upload, Button, Form, Typography, Flex } from "antd";
 import { useFormikContext } from "formik";
 
 import notify from "../../../hooks/useNotifyToast";
-import { getFileExtensionFromUrl } from "../../../utils/data";
+// import { getFileExtensionFromUrl } from "../../../utils/data";
 
 const FileUploadInput = ({
   name,
@@ -18,7 +18,7 @@ const FileUploadInput = ({
   showNotification = false,
   showFileName = false,
   allowFileDelete = false,
-  defaultFileName = "document",
+  // defaultFileName = "document",
   maxFileSize = 2000,
   isRequired,
   allowedFileTypes = ["image/jpeg", "image/png"],
@@ -34,9 +34,7 @@ const FileUploadInput = ({
     setFieldTouched,
   } = useFormikContext();
   const [fileName, setFileName] = useState(
-    values[name]
-      ? `${defaultFileName}.${getFileExtensionFromUrl(values[name])}`
-      : ""
+    values[name] ? `${values[name]}` : ""
   );
 
   const beforeUpload = (file) => {
@@ -157,7 +155,13 @@ const FileUploadInput = ({
         {showFileName && fileName !== "" && (
           <Flex justify="space-between" align="center">
             <Typography.Text className="text-blue-500 line-clamp-1">
-              {fileName}
+              {fileName.startsWith("http") ? (
+                <a href={fileName} target="_blank" rel="noopener noreferrer">
+                  {fileName}
+                </a>
+              ) : (
+                fileName
+              )}
             </Typography.Text>
             {allowFileDelete && (
               <Button

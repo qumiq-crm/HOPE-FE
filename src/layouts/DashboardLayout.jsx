@@ -88,10 +88,11 @@ const DashboardLayout = ({ children }) => {
                     key={i}
                     onClick={() => {
                       setActiveTab(i + 1);
-                      navigate(`${paths.dashboard.products}?cat=${item?._id}`, {
+                      navigate(`${paths.dashboard.products}`, {
                         state: {
                           categoryName: item?.name,
                           categoryDesc: item?.description,
+                          categoryId: item?._id
                         },
                       });
                     }}

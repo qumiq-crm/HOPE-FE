@@ -21,7 +21,8 @@ import { CreditCardFilled } from "@ant-design/icons";
 import { useLocation, useNavigate } from "react-router-dom";
 import useProductDetails from "../../hooks/useProductsDetails";
 import { paths } from "../../routes/paths";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { ORDER_MOBILENO } from "../../config-global";
 
 const { useBreakpoint } = Grid;
 const ProductDetailsPage = () => {
@@ -30,6 +31,7 @@ const ProductDetailsPage = () => {
   const { Text } = Typography;
   const screens = useBreakpoint();
   const { loading, product } = useProductDetails({ productId: prdId });
+  const [viewImg, setViewImg] = useState(0);
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [prdId]);
@@ -49,7 +51,7 @@ const ProductDetailsPage = () => {
           <Col xs={24} md={12} className="flex flex-col align-middle p-0">
             <Card size="small" className="rounded-2xl p-0">
               <Image
-                src=""
+                src={product?.images?.[viewImg]}
                 alt="No image available"
                 width="100%"
                 height={430}
@@ -57,12 +59,12 @@ const ProductDetailsPage = () => {
                 fallback="https://www.ugaoo.com/cdn/shop/files/3_95c81721-0beb-47c4-8eae-3efad6742baf.jpg?v=1717308876&width=360"
               />
               <Flex gap={10} justify="center">
-                {[2, 3, 4, 6]?.map((image, index) => (
+                {product?.images?.map((image, index) => (
                   <Image
                     key={index}
-                    src=""
+                    src={image}
                     alt="prd"
-                    // onClick={() => setSelectedImageIndex(index)}
+                    onClick={() => setViewImg(index)}
                     role="button"
                     preview={false}
                     width={70}
@@ -161,7 +163,7 @@ const ProductDetailsPage = () => {
                         size="large"
                         className="px-8 py-2 p-2"
                         onClick={() => {
-                          window.location.href = `https://wa.me/+919995144332?text=${product?.name
+                          window.location.href = `https://wa.me/${ORDER_MOBILENO}?text=${product?.name
                             .split(" ")
                             .join("%20")}`;
                         }}
@@ -297,7 +299,7 @@ const ProductDetailsPage = () => {
                   <Card
                     cover={
                       <Image
-                        src={product.image}
+                        src={product?.images?.[0]}
                         alt={product.name}
                         preview={false}
                         fallback="https://www.ugaoo.com/cdn/shop/files/2_72x-100.jpg?v=1739860291&width=360"

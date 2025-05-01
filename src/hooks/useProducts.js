@@ -64,6 +64,10 @@ const useProduct = (filters) => {
     }
   };
 
+  useEffect(() => {
+    fetchProducts();
+  }, [fetchProducts]);
+
   return {
     products,
     totalCount,

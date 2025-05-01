@@ -55,7 +55,7 @@ export const productSchema = Yup.object().shape({
     ),
 
   highlights: Yup.string()
-    .required("Please enter the highlights")
+    .optional()
     .min(3, "Highlights must be at least 3 characters")
     .max(350, "Maximum 350 characters are allowed")
     .test(
