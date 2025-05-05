@@ -7,6 +7,7 @@ import TextAreaInput from "../common/inputs/TextAreaInput";
 import CustomModalWithForm from "../common/modals/CustomModalWithForm";
 // import FileUploadInput from "../common/inputs/FileUploadInput";
 import { categorySchema } from "../../schemas";
+import FileUploadInput from "../common/inputs/FileUploadInput";
 const CategoryModal = ({
   open,
   handleCancel,
@@ -25,15 +26,15 @@ const CategoryModal = ({
         if (data && data?._id) {
           await handleUpdateCat(data._id, values);
         } else {
-          await handleCreateCat(values)
+          await handleCreateCat(values);
         }
-        handleCancel()
+        handleCancel();
       }}
       initialValues={{
         _id: data?._id,
         name: data?.name || "",
         description: data?.description || "",
-        // image: data?.image || "",
+        image: data?.image || "",
       }}
     >
       {({ values }) => (
@@ -54,13 +55,14 @@ const CategoryModal = ({
             isRequired
             maxLength={350}
           />
-          {/* <FileUploadInput
+          <FileUploadInput
             name="image"
             format="imageFormat"
             label="Upload Image"
+            defaultFileName="Image"
             showFileName
             allowFileDelete
-          /> */}
+          />
         </Form>
       )}
     </CustomModalWithForm>

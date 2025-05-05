@@ -60,10 +60,11 @@ const DashboardLayout = ({ children }) => {
     <Flex vertical>
       <div className="min-h-screen">
         <Row
-          className="w-full px-2 xl:px-60  bg-[#FFF6F4]"
+          className="w-full px-2 xl:px-4  bg-[#FFF6F4]"
           justify="space-between"
+          gutter={[0, 10]}
         >
-          <Col xs={24} lg={4} className="flex justify-center items-center">
+          <Col xs={12} lg={8} className="flex justify-center items-center">
             <Link to="/" onClick={() => setActiveTab(undefined)}>
               <Image
                 src={Logo}
@@ -74,7 +75,12 @@ const DashboardLayout = ({ children }) => {
               />
             </Link>
           </Col>
-          <Col xs={24} lg={14} className="flex justify-center items-center">
+          <Col xs={12} lg={8} className="flex justify-center items-center">
+            <Typography.Text className="text-center font-medium md:font-normal text-[#029354] text-base md:text-lg lg:text-3xl">
+              Hope: Agriculture and charitable trust
+            </Typography.Text>
+          </Col>
+          <Col xs={24} lg={8} className="flex justify-center items-center">
             <Row
               justify="center"
               align="middle"
@@ -92,7 +98,7 @@ const DashboardLayout = ({ children }) => {
                         state: {
                           categoryName: item?.name,
                           categoryDesc: item?.description,
-                          categoryId: item?._id
+                          categoryId: item?._id,
                         },
                       });
                     }}

@@ -58,7 +58,7 @@ const HomePage = () => {
   ];
   return (
     <Content>
-      <Carousel autoplay={{ dotDuration: true }} autoplaySpeed={5000}>
+      <Carousel autoplay autoplaySpeed={5000}>
         {screens.lg
           ? homePageCarousel.map((item, key) => (
               <Flex key={key} justify="center">
@@ -67,6 +67,14 @@ const HomePage = () => {
                     vertical
                     className="bg-gray-100 flex items-center justify-center relative"
                   >
+                    <Typography.Text
+                      level={2}
+                      className="absolute top-50 z-10 text-white text-center text-2xl"
+                      style={{ width: "100%" }}
+                    >
+                      {item.title || ""}
+                    </Typography.Text>
+
                     <Button
                       type="primary"
                       size="large"
@@ -74,12 +82,13 @@ const HomePage = () => {
                     >
                       SHOP NOW
                     </Button>
+
                     <Image
-                      src={item}
+                      src={item.image}
                       preview={false}
                       style={{
                         width: "100vw",
-                        objectFit: "fill", // Ensures the image covers the whole area
+                        objectFit: "fill",
                       }}
                       className="relative z-0"
                     />
@@ -94,6 +103,14 @@ const HomePage = () => {
                     vertical
                     className="bg-gray-100 flex items-center justify-center relative"
                   >
+                    <Typography.Text
+                      level={4}
+                      className="absolute top-50 z-10 text-white text-center"
+                      style={{ width: "100%" }}
+                    >
+                      {item.title || ""}
+                    </Typography.Text>
+
                     <Button
                       type="primary"
                       size="middle"
@@ -101,12 +118,13 @@ const HomePage = () => {
                     >
                       SHOP NOW
                     </Button>
+
                     <Image
-                      src={item}
+                      src={item.image}
                       preview={false}
                       style={{
                         width: "100vw",
-                        objectFit: "fill", // Ensures the image covers the whole area
+                        objectFit: "fill",
                       }}
                       className="relative z-0"
                     />
@@ -189,110 +207,113 @@ const HomePage = () => {
         </Row>
       </Flex> */}
 
-          <Flex vertical className="px-2 xl:px-60 mt-14">
-            <Typography.Title
-              level={screens.lg ? 1 : 3}
-              className="text-center text-[#0a4c36] mb-8"
-            >
-              New Arrivals
-            </Typography.Title>
-            <Row gutter={[24, 24]} className="justify-center">
-              {newArrivals.map((product, index) => (
-                <Col xs={24} sm={12} lg={8} xl={8} key={index}>
-                  <Card
-                    cover={
-                      <Image
-                        src={product.images?.[0]}
-                        alt={product.name}
-                        preview={false}
-                        fallback="https://www.ugaoo.com/cdn/shop/files/2_72x-100.jpg?v=1739860291&width=360"
-                      />
-                    }
-                    className="relative"
-                  >
-                    {product.highlights && (
-                      <Tag className="absolute top-4 right-4 bg-yellow-400 px-2 py-1 rounded">
-                        {product.highlights}
-                      </Tag>
-                    )}
-                    {product.discount && product.discountType ? (
-                      <Tag className="absolute top-4 left-4 bg-yellow-400 px-2 py-1 rounded">
-                        OFF{" "}
-                        {product.discountType == "PERCENTAGE"
-                          ? `${product.discount}%`
-                          : `${product.discount}/-`}
-                      </Tag>
-                    ) : (
-                      ""
-                    )}
-
-                    <Space
-                      direction="vertical"
-                      className="flex justify-center items-center w-full"
-                    >
-                      <Typography.Title level={4}>
-                        {product.name}
-                      </Typography.Title>
-                      <Flex gap={5} align="end">
-                        {Number(product.discount) > 0 ? (
-                          <Typography.Text delete className="text-gray-400">
-                            ₹ {product.price}
-                          </Typography.Text>
-                        ) : (
-                          ""
-                        )}
-                        <Typography.Text
-                          strong
-                          className="text-lg text-[#149253]"
-                        >
-                          From ₹{" "}
-                          {Number(product.price) -
-                            (product.discountType == "PERCENTAGE"
-                              ? Number((product.price * product.discount) / 100)
-                              : Number(product.discount))}
-                        </Typography.Text>
-                      </Flex>
-                      <Rate
-                        disabled
-                        allowHalf
-                        defaultValue={(Math.random() * 2 + 3).toFixed(1)}
-                      />
-                      <Button
-                        type="primary"
-                        size="large"
-                        className="lg:px-24"
-                        onClick={() =>
-                          navigate(
-                            `${paths.dashboard.products}/${paths.products.details}`,
-                            {
-                              state: {
-                                prdId: product._id,
-                              },
-                            }
-                          )
-                        }
-                      >
-                        VIEW PRODUCT
-                      </Button>
-                    </Space>
-                  </Card>
-                </Col>
-              ))}
-            </Row>
-            <Flex className="mt-8" justify="center">
-              <Button
-                type="primary"
-                size="large"
-                className="lg:px-16"
-                onClick={() => navigate(paths.dashboard.products)}
+          {newArrivals && newArrivals.length && (
+            <Flex vertical className="px-2 xl:px-60 mt-14">
+              <Typography.Title
+                level={screens.lg ? 1 : 3}
+                className="text-center text-[#0a4c36] mb-8"
               >
-                VIEW ALL
-              </Button>
+                New Arrivals
+              </Typography.Title>
+              <Row gutter={[24, 24]} className="justify-center">
+                {newArrivals.map((product, index) => (
+                  <Col xs={24} sm={12} lg={8} xl={8} key={index}>
+                    <Card
+                      cover={
+                        <Image
+                          src={product.images?.[0]}
+                          alt={product.name}
+                          preview={false}
+                          fallback="https://www.ugaoo.com/cdn/shop/files/2_72x-100.jpg?v=1739860291&width=360"
+                        />
+                      }
+                      className="relative"
+                    >
+                      {product.highlights && (
+                        <Tag className="absolute top-4 right-4 bg-yellow-400 px-2 py-1 rounded">
+                          {product.highlights}
+                        </Tag>
+                      )}
+                      {product.discount && product.discountType ? (
+                        <Tag className="absolute top-4 left-4 bg-yellow-400 px-2 py-1 rounded">
+                          OFF{" "}
+                          {product.discountType == "PERCENTAGE"
+                            ? `${product.discount}%`
+                            : `${product.discount}/-`}
+                        </Tag>
+                      ) : (
+                        ""
+                      )}
+
+                      <Space
+                        direction="vertical"
+                        className="flex justify-center items-center w-full"
+                      >
+                        <Typography.Title level={4}>
+                          {product.name}
+                        </Typography.Title>
+                        <Flex gap={5} align="end">
+                          {Number(product.discount) > 0 ? (
+                            <Typography.Text delete className="text-gray-400">
+                              ₹ {product.price}
+                            </Typography.Text>
+                          ) : (
+                            ""
+                          )}
+                          <Typography.Text
+                            strong
+                            className="text-lg text-[#149253]"
+                          >
+                            From ₹{" "}
+                            {Number(product.price) -
+                              (product.discountType == "PERCENTAGE"
+                                ? Number(
+                                    (product.price * product.discount) / 100
+                                  )
+                                : Number(product.discount))}
+                          </Typography.Text>
+                        </Flex>
+                        <Rate
+                          disabled
+                          allowHalf
+                          defaultValue={(Math.random() * 2 + 3).toFixed(1)}
+                        />
+                        <Button
+                          type="primary"
+                          size="large"
+                          className="lg:px-24"
+                          onClick={() =>
+                            navigate(
+                              `${paths.dashboard.products}/${paths.products.details}`,
+                              {
+                                state: {
+                                  prdId: product._id,
+                                },
+                              }
+                            )
+                          }
+                        >
+                          VIEW PRODUCT
+                        </Button>
+                      </Space>
+                    </Card>
+                  </Col>
+                ))}
+              </Row>
+              <Flex className="mt-8" justify="center">
+                <Button
+                  type="primary"
+                  size="large"
+                  className="lg:px-16"
+                  onClick={() => navigate(paths.dashboard.products)}
+                >
+                  VIEW ALL
+                </Button>
+              </Flex>
             </Flex>
-          </Flex>
+          )}
         </>
       )}
-
       <Flex
         vertical
         className="w-full bg-emerald-50/50 py-10 px-2 xl:px-60 mt-10"

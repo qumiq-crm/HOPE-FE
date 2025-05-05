@@ -1,17 +1,49 @@
+import Carousel1 from "../assets/images/carousel1.jpg";
+
 export const homePageCarousel = [
-  "https://www.ugaoo.com/cdn/shop/files/offer-banner_60e9bd14-9eb5-41b3-b9b2-05c500e1963e.png?v=1739963488&width=2000",
-  "https://www.ugaoo.com/cdn/shop/files/plantcare-banner_a37f8e27-0c3f-495d-b459-1fb83b5920a5.png?v=1739963487&width=2000",
-  "https://www.ugaoo.com/cdn/shop/files/Bundles-Banner_6d0e3e59-0b21-4038-a8a1-b0582cdd4f0a.jpg?v=1739959151&width=2000",
-  "https://www.ugaoo.com/cdn/shop/files/planters-banner_a6236c08-21f0-4314-b870-0482f5de8b1a.png?v=1739963487&width=2000",
-  "https://www.ugaoo.com/cdn/shop/files/seeds-banner_ce8e8f43-e525-41d3-9f0f-9d7217a2604e.png?v=1739963488&width=2000",
+  {
+    image: Carousel1,
+    title: "Changes everything",
+  },
+  {
+    image: Carousel1,
+    title: "Care for Your Plants Like a Pro",
+  },
+  {
+    image: Carousel1,
+    title: "Exclusive Plant Bundles",
+  },
+  {
+    image: Carousel1,
+    title: "Stylish Planters for Every Space",
+  },
+  {
+    image: Carousel1,
+    title: "High-Quality Seeds to Start Your Garden",
+  },
 ];
 
 export const homePageCarouselForMobile = [
-  "https://www.ugaoo.com/cdn/shop/files/Mobile_Offer-Banner.png?v=1739963484&width=3000",
-  "https://www.ugaoo.com/cdn/shop/files/Mobile_Bundles-Banner.png?v=1739963481&width=1780",
-  "https://www.ugaoo.com/cdn/shop/files/Mobile_Offer-Banner.png?v=1739963484&width=3000",
-  "	https://www.ugaoo.com/cdn/shop/files/Mobile_Plant-Care-Banner.png?v=1739963481&width=3000",
-  "https://www.ugaoo.com/cdn/shop/files/Mobile_Offer-Banner.png?v=1739963484&width=3000",
+  {
+    image: Carousel1,
+    title: "Changes everything",
+  },
+  {
+    image: Carousel1,
+    title: "Care for Your Plants Like a Pro",
+  },
+  {
+    image: Carousel1,
+    title: "Exclusive Plant Bundles",
+  },
+  {
+    image: Carousel1,
+    title: "Stylish Planters for Every Space",
+  },
+  {
+    image: Carousel1,
+    title: "High-Quality Seeds to Start Your Garden",
+  },
 ];
 
 export const categoryData = [
@@ -244,4 +276,3 @@ export const products = [
     price: "1299",
   },
 ];
-
