@@ -29,18 +29,10 @@ import useDashboard from "../../hooks/useDashboard";
 // import { useNavigate } from "react-router-dom";
 
 const contentStyle = {
-  position: "relative",
-  width: "100vw",
+  color: "#fff",
+  lineHeight: "160px",
   textAlign: "center",
-};
-
-const frameStyle = {
-  border: "10px solid #0D6834", // Green border similar to the prompt
-  padding: "10px",
-  borderRadius: "15px", // Optional: If you want rounded corners
-  boxShadow: "0px 0px 20px rgba(0, 0, 0, 0.2)", // Subtle shadow effect
-  margin: "20px", // Adjust spacing
-  overflow: "hidden",
+  background: "#364d79",
 };
 
 const { useBreakpoint } = Grid;
@@ -66,86 +58,87 @@ const HomePage = () => {
   ];
   return (
     <Content>
-      <div style={frameStyle}>
-        {" "}
-        {/* Apply the frame styles */}
-        <Carousel autoplay autoplaySpeed={5000}>
-          {screens.lg
-            ? homePageCarousel.map((item, key) => (
-                <Flex key={key} justify="center">
-                  <Flex style={contentStyle} justify="center">
-                    <Flex
-                      vertical
-                      className="bg-gray-100 flex items-center justify-center relative"
+      {/* <div style={frameStyle}>
+        {" "} */}
+      {/* Apply the frame styles */}
+      <Carousel autoplay autoplaySpeed={5000}>
+        {screens.lg
+          ? homePageCarousel.map((item, key) => (
+              <Flex key={key} justify="center">
+                <Flex style={contentStyle} justify="center">
+                  <Flex
+                    vertical
+                    className="bg-gray-100 flex items-center justify-center relative"
+                  >
+                    <Typography.Text
+                      level={2}
+                      className="absolute top-50 z-10 text-white text-center text-2xl"
+                      style={{ width: "100%" }}
                     >
-                      <Typography.Text
-                        level={2}
-                        className="absolute top-50 z-10 text-white text-center text-2xl"
-                        style={{ width: "100%" }}
-                      >
-                        {item.title || ""}
-                      </Typography.Text>
+                      {item.title || ""}
+                    </Typography.Text>
 
-                      <Button
-                        type="primary"
-                        size="large"
-                        className="absolute bottom-20 z-10 px-10"
-                      >
-                        SHOP NOW
-                      </Button>
+                    <Button
+                      type="primary"
+                      size="large"
+                      className="absolute bottom-20 z-10 px-10"
+                      onClick={() => navigate(paths.dashboard.products)}
+                    >
+                      SHOP NOW
+                    </Button>
 
-                      <Image
-                        src={item.image}
-                        preview={false}
-                        style={{
-                          width: "100vw",
-                          maxWidth: "50rem",
-                          objectFit: "fill",
-                        }}
-                        className="relative z-0"
-                      />
-                    </Flex>
+                    <Image
+                      src={item.image}
+                      preview={false}
+                      style={{
+                        width: "100vw",
+                        maxHeight: "50rem",
+                        objectFit: "fill",
+                      }}
+                      className="relative z-0"
+                    />
                   </Flex>
                 </Flex>
-              ))
-            : homePageCarouselForMobile.map((item, key) => (
-                <Flex key={key} justify="center">
-                  <Flex style={contentStyle} justify="center">
-                    <Flex
-                      vertical
-                      className="bg-gray-100 flex items-center justify-center relative"
+              </Flex>
+            ))
+          : homePageCarouselForMobile.map((item, key) => (
+              <Flex key={key} justify="center">
+                <Flex style={contentStyle} justify="center">
+                  <Flex
+                    vertical
+                    className="bg-gray-100 flex items-center justify-center relative"
+                  >
+                    <Typography.Text
+                      level={4}
+                      className="absolute top-50 z-10 text-white text-center"
+                      style={{ width: "100%" }}
                     >
-                      <Typography.Text
-                        level={4}
-                        className="absolute top-50 z-10 text-white text-center"
-                        style={{ width: "100%" }}
-                      >
-                        {item.title || ""}
-                      </Typography.Text>
+                      {item.title || ""}
+                    </Typography.Text>
 
-                      <Button
-                        type="primary"
-                        size="middle"
-                        className="absolute bottom-7 z-10 px-4"
-                      >
-                        SHOP NOW
-                      </Button>
+                    <Button
+                      type="primary"
+                      size="middle"
+                      className="absolute bottom-7 z-10 px-4"
+                    >
+                      SHOP NOW
+                    </Button>
 
-                      <Image
-                        src={item.image}
-                        preview={false}
-                        style={{
-                          width: "100vw",
-                          objectFit: "fill",
-                        }}
-                        className="relative z-0"
-                      />
-                    </Flex>
+                    <Image
+                      src={item.image}
+                      preview={false}
+                      style={{
+                        width: "100vw",
+                        objectFit: "fill",
+                      }}
+                      className="relative z-0"
+                    />
                   </Flex>
                 </Flex>
-              ))}
-        </Carousel>
-      </div>
+              </Flex>
+            ))}
+      </Carousel>
+      {/* </div> */}
       {loading ? (
         <>
           {[...Array(5)].map((_, index) => (
@@ -220,7 +213,7 @@ const HomePage = () => {
         </Row>
       </Flex> */}
 
-          {newArrivals && newArrivals.length && (
+          {newArrivals && newArrivals.length ? (
             <Flex vertical className="px-2 xl:px-60 mt-14">
               <Typography.Title
                 level={screens.lg ? 1 : 3}
@@ -324,6 +317,8 @@ const HomePage = () => {
                 </Button>
               </Flex>
             </Flex>
+          ) : (
+            ""
           )}
         </>
       )}

@@ -1,48 +1,43 @@
 import Carousel1 from "../assets/images/carousel1.jpg";
+import Carousel2 from "../assets/images/carousel2.jpg";
+import Carousel3 from "../assets/images/carousel3.jpg";
+import Carousel4 from "../assets/images/carousel4.jpg";
 
 export const homePageCarousel = [
   {
     image: Carousel1,
-    title: "Changes everything",
+    title: "",
   },
   {
-    image: Carousel1,
-    title: "Care for Your Plants Like a Pro",
+    image: Carousel2,
+    title: "",
   },
   {
-    image: Carousel1,
-    title: "Exclusive Plant Bundles",
+    image: Carousel3,
+    title: "",
   },
   {
-    image: Carousel1,
-    title: "Stylish Planters for Every Space",
-  },
-  {
-    image: Carousel1,
-    title: "High-Quality Seeds to Start Your Garden",
+    image: Carousel4,
+    title: "",
   },
 ];
 
 export const homePageCarouselForMobile = [
   {
     image: Carousel1,
-    title: "Changes everything",
+    title: "",
   },
   {
-    image: Carousel1,
-    title: "Care for Your Plants Like a Pro",
+    image: Carousel2,
+    title: "",
   },
   {
-    image: Carousel1,
-    title: "Exclusive Plant Bundles",
+    image: Carousel3,
+    title: "",
   },
   {
-    image: Carousel1,
-    title: "Stylish Planters for Every Space",
-  },
-  {
-    image: Carousel1,
-    title: "High-Quality Seeds to Start Your Garden",
+    image: Carousel4,
+    title: "",
   },
 ];
 
