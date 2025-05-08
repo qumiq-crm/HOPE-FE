@@ -7,7 +7,7 @@ export const getCategoryList = async (payload) => {
       limit: itemsPerPage,
       offset: page,
       searchText,
-      isActiveOnly
+      isActiveOnly,
     } = payload;
     const params = { itemsPerPage, page, searchText, isActiveOnly };
     const resp = await ApiClient.get(`category/all`, { params });
@@ -20,7 +20,9 @@ export const getCategoryList = async (payload) => {
 
 export const getAllCategories = async (isActiveOnly) => {
   try {
-    const resp = await ApiClient.get(`category/list`, { isActiveOnly });
+    const resp = await ApiClient.get(`category/list`, {
+      params: { isActiveOnly },
+    });
     const { data } = resp;
     return data;
   } catch (err) {
@@ -46,9 +48,16 @@ export const getProductList = async (payload) => {
       searchText,
       selectedCat,
       sortBy,
-      isActiveOnly
+      isActiveOnly,
     } = payload;
-    const params = { itemsPerPage, page, searchText, selectedCat, sortBy, isActiveOnly };
+    const params = {
+      itemsPerPage,
+      page,
+      searchText,
+      selectedCat,
+      sortBy,
+      isActiveOnly,
+    };
     const resp = await ApiClient.get(`product/all`, { params });
     const { data } = resp;
     return data;
@@ -80,6 +89,15 @@ export const authenticateAdmin = async (payload) => {
 export const updateProductApi = async (productId, payload) => {
   try {
     const resp = await ApiClient.put(`product/${productId}`, payload);
+    const { data } = resp;
+    return data;
+  } catch (err) {
+    return false;
+  }
+};
+export const updateProductStatusApi = async (productId, payload) => {
+  try {
+    const resp = await ApiClient.patch(`product/${productId}/status`, payload);
     const { data } = resp;
     return data;
   } catch (err) {

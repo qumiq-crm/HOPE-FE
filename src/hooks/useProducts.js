@@ -4,6 +4,7 @@ import {
   createProductApi,
   getProductList,
   updateProductApi,
+  updateProductStatusApi,
 } from "../api/index";
 import notify from "./useNotifyToast";
 
@@ -52,12 +53,29 @@ const useProduct = (filters) => {
       const data = await updateProductApi(id, productData);
       if (data) {
         fetchProducts();
-        notify("Product created successfully!", "success");
+        notify("Product updated successfully!", "success");
       }
       return data;
     } catch (error) {
       const errorMessage =
-        error?.response?.data?.message || "Failed to create product";
+        error?.response?.data?.message || "Failed to update product";
+      notify(errorMessage, "error");
+    } finally {
+      setLoading(false);
+    }
+  };
+  const updateProductStatus = async (id, productData) => {
+    setLoading(true);
+    try {
+      const data = await updateProductStatusApi(id, productData);
+      if (data) {
+        fetchProducts();
+        notify("Product updated successfully!", "success");
+      }
+      return data;
+    } catch (error) {
+      const errorMessage =
+        error?.response?.data?.message || "Failed to update product";
       notify(errorMessage, "error");
     } finally {
       setLoading(false);
@@ -75,6 +93,7 @@ const useProduct = (filters) => {
     refetch: fetchProducts,
     handleCreatePrd: createProduct,
     handleUpdatePrd: updateProduct,
+    handleUpdatePrdStatus: updateProductStatus,
   };
 };
 

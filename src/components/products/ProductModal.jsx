@@ -45,7 +45,7 @@ const ProductModal = ({
         price: !isNaN(data?.price) ? `${data?.price}` : "",
         category: data?.category?._id?.toString() || "",
         quantity: data?.quantity || "",
-        discountType: data?.discountType || "",
+        discountType: data?.discountType,
         discount:
           data?.discount && Number(data?.discount) >= 0
             ? `${data?.discount}`

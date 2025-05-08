@@ -30,12 +30,6 @@ const Product = () => {
   const [deleteModal, setDeleteModal] = useState(false);
   const [modalData, setModalData] = useState();
 
-  const handleActive = (prodId, status) => {
-    let active;
-    if (status === 1 || status === true) active = false;
-    else active = true;
-    handleUpdatePrd(prodId, { isActive: active });
-  };
   const handleEdit = (record) => {
     setModalData(record);
     setOpenModal(true);
@@ -46,13 +40,25 @@ const Product = () => {
       searchText: query,
     }));
   };
-  const { loading, products, handleCreatePrd, handleUpdatePrd, refetch } =
-    useProduct(filters);
+  const {
+    loading,
+    products,
+    handleCreatePrd,
+    handleUpdatePrd,
+    refetch,
+    handleUpdatePrdStatus,
+  } = useProduct(filters);
   const { categories } = useCategoryList();
-  useEffect(()=>{
-    refetch()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[])
+  const handleActive = (prodId, status) => {
+    let active;
+    if (status === 1 || status === true) active = false;
+    else active = true;
+    handleUpdatePrdStatus(prodId, { isActive: active });
+  };
+  useEffect(() => {
+    refetch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const columns = [
     {
       title: "Date",
@@ -88,9 +94,7 @@ const Product = () => {
       dataIndex: ["category", "name"],
       key: "category",
       render: (_, data) => (
-        <Typography.Text>
-          {data?.category?.name || "N/A"}
-        </Typography.Text>
+        <Typography.Text>{data?.category?.name || "N/A"}</Typography.Text>
       ),
     },
     {
