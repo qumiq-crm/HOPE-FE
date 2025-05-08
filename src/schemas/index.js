@@ -74,7 +74,7 @@ export const productSchema = Yup.object().shape({
     ),
 
   SKUCode: Yup.string()
-    .required("Please enter the SKU Code")
+    .optional()
     .max(50, "Maximum 50 characters are allowed")
     .test(
       "no-leading-whitespace",
@@ -87,7 +87,7 @@ export const productSchema = Yup.object().shape({
   price: Yup.number()
     .typeError("Price must be a valid number")
     .required("Please enter the price")
-    .positive("Price must be greater than 0")
+    .min(0, "Price cannot be negative")
     .max(9999999999, "Price value is too large"), // max 10 digits
 
   quantity: Yup.number()
@@ -97,11 +97,11 @@ export const productSchema = Yup.object().shape({
     .positive("Quantity must be greater than 0")
     .max(9999999999, "Quantity value is too large"), // max 10 digits
 
-  discountType: Yup.string().required("Please select a discount type"),
+  discountType: Yup.string().optional(),
 
   discount: Yup.number()
     .typeError("Discount must be a valid number")
-    .required("Please enter the discount")
+    .optional()
     .min(0, "Discount cannot be negative")
     .max(1000000000, "Discount value is too large"),
 });
