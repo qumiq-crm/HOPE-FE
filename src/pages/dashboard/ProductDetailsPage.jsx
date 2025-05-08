@@ -111,7 +111,7 @@ const ProductDetailsPage = () => {
                         </Text>
                       </Flex>
                     )}
-                    <Flex justify="center" align="center" gap={10}>
+                    {/* <Flex justify="center" align="center" gap={10}>
                       <Image
                         preview={false}
                         src={cashBack}
@@ -120,7 +120,7 @@ const ProductDetailsPage = () => {
                       <Text className="text-textDimGreen font-roboto text-base">
                         Earn Cashback
                       </Text>
-                    </Flex>
+                    </Flex> */}
                   </Flex>
                 </Flex>
                 <Flex gap={5} vertical className="mt-5">
@@ -153,8 +153,7 @@ const ProductDetailsPage = () => {
                 </Flex>
                 <Flex gap={15} vertical className="mt-5">
                   <Text className="text-textBlack text-base font-normal">
-                    This item will be delivered within 2 to 4 working days with
-                    standard delivery charge.
+                    {product.description}
                   </Text>
                   <Flex gap={10} className="m-0 p-0">
                     {Number(product.quantity) > 0 && (
@@ -235,8 +234,7 @@ const ProductDetailsPage = () => {
                 </Row>
                 <Row className="mt-2">
                   <Typography.Text className="text-textBlack font-inter font-normal text-base">
-                    This item will be delivered within 2 to 4 working days with
-                    standard delivery charge.
+                    {product.description}
                   </Typography.Text>
                 </Row>
               </>
