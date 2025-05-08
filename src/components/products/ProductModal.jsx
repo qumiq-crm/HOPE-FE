@@ -42,12 +42,12 @@ const ProductModal = ({
         highlights: data?.highlights || "",
         warranty: data?.warranty || "",
         SKUCode: data?.SKUCode || "",
-        price: data?.price || "",
+        price: !isNaN(data?.price) ? `${data?.price}` : "",
         category: data?.category?._id?.toString() || "",
         quantity: data?.quantity || "",
         discountType: data?.discountType || "",
         discount:
-          data?.discount || Number(data?.discount) === 0
+          data?.discount && Number(data?.discount) >= 0
             ? `${data?.discount}`
             : "",
         productImage1: data?.images[0] || "",
@@ -99,12 +99,11 @@ const ProductModal = ({
           />
           <TextInput
             name="SKUCode"
-            label="SKU Code"
+            label="SKU Code (Optional)"
             type="text"
             placeholder="Please enter SKU Code "
             classes=" rounded-sm"
             maxLength={50}
-            isRequired
           />
           {categoryData ? (
             <SelectInput
@@ -142,21 +141,19 @@ const ProductModal = ({
           />
           <SelectInput
             name="discountType"
-            isRequired
             options={[
               { value: "PERCENTAGE", label: "Percentage" },
               { value: "FLAT", label: "Flat" },
             ]}
             placeholder="Please select a discount type"
-            label="Discount type"
+            label="Discount type (Optional)"
           />
           <TextInput
             allowTwoDecimalsOnly
             name="discount"
-            label="Discount"
+            label="Discount (Optional)"
             type="text"
             placeholder="Please enter discount  "
-            isRequired
             classes=" rounded-sm"
             maxLength={10}
           />
