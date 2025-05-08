@@ -72,10 +72,10 @@ const HomePage = () => {
                   >
                     <Typography.Text
                       level={2}
-                      className="absolute top-50 z-10 text-white text-center text-2xl"
+                      className="absolute bottom-40 z-10 text-white text-center text-2xl font-medium"
                       style={{ width: "100%" }}
                     >
-                      {item.title || ""}
+                      <span>“{item.title || ""}”</span>
                     </Typography.Text>
 
                     <Button
@@ -110,7 +110,7 @@ const HomePage = () => {
                   >
                     <Typography.Text
                       level={4}
-                      className="absolute top-50 z-10 text-white text-center"
+                      className="absolute bottom-50 z-10 text-white text-center"
                       style={{ width: "100%" }}
                     >
                       {item.title || ""}

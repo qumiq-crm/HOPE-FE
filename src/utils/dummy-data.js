@@ -6,38 +6,38 @@ import Carousel4 from "../assets/images/carousel4.jpg";
 export const homePageCarousel = [
   {
     image: Carousel1,
-    title: "",
+    title: "Changes everything",
   },
   {
     image: Carousel2,
-    title: "",
+    title: "Care for Your Plants Like a Pro",
   },
   {
     image: Carousel3,
-    title: "",
+    title: "Exclusive Plant Bundles",
   },
   {
     image: Carousel4,
-    title: "",
+    title: "Stylish Planters for Every Space",
   },
 ];
 
 export const homePageCarouselForMobile = [
   {
     image: Carousel1,
-    title: "",
+    title: "Changes everything",
   },
   {
     image: Carousel2,
-    title: "",
+    title: "Care for Your Plants Like a Pro",
   },
   {
     image: Carousel3,
-    title: "",
+    title: "Exclusive Plant Bundles",
   },
   {
     image: Carousel4,
-    title: "",
+    title: "Stylish Planters for Every Space",
   },
 ];
 
