@@ -42,101 +42,95 @@ const HomePage = () => {
   const navigate = useNavigate();
   const { categories, loading, newArrivals } = useDashboard();
 
-  const features = [
-    {
-      icon: <PayCircleFilled className="text-4xl text-[#0a4c36]" />,
-      title: "Secure and Recyclable Packaging",
-    },
-    {
-      icon: <BulbOutlined className="text-4xl text-[#0a4c36]" />,
-      title: "Free Replacements if Damaged",
-    },
-    {
-      icon: <ExperimentOutlined className="text-4xl text-[#0a4c36]" />,
-      title: "Self-Watering Pots with Every Plant",
-    },
-  ];
+ 
   return (
     <Content>
       {/* <div style={frameStyle}>
         {" "} */}
       {/* Apply the frame styles */}
-      <Carousel autoplay autoplaySpeed={5000}>
+      <Carousel autoplay autoplaySpeed={3000}>
         {screens.lg
           ? homePageCarousel.map((item, key) => (
-              <Flex key={key} justify="center">
-                <Flex style={contentStyle} justify="center">
-                  <Flex
-                    vertical
-                    className="bg-gray-100 flex items-center justify-center relative"
+            <Flex key={key} justify="center">
+              <Flex style={contentStyle} justify="center">
+                <Flex
+                  vertical
+                  className="bg-gray-100 flex items-center justify-center relative"
+                  style={{
+                    backgroundImage: `url(${item.image})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    width: '100vw',
+                    height: '50rem'
+                  }}
+                >
+                  <Typography.Text
+                    level={2}
+                    className="absolute bottom-40 z-10 text-[#0a4c36] text-center text-2xl font-medium"
+                    style={{
+                      display: "inline-block",
+                      background: "rgba(255, 255, 255, 0.7)",
+                      padding: "15px 25px",
+                      borderRadius: "50px",
+                      fontFamily: "'Montserrat', sans-serif"
+                    }}
                   >
-                    <Typography.Text
-                      level={2}
-                      className="absolute bottom-40 z-10 text-white text-center text-2xl font-medium"
-                      style={{ width: "100%" }}
-                    >
-                      <span>“{item.title || ""}”</span>
-                    </Typography.Text>
+                    <span>"{item.title || ""}"</span>
+                  </Typography.Text>
 
-                    <Button
-                      type="primary"
-                      size="large"
-                      className="absolute bottom-20 z-10 px-10"
-                      onClick={() => navigate(paths.dashboard.products)}
-                    >
-                      SHOP NOW
-                    </Button>
-
-                    <Image
-                      src={item.image}
-                      preview={false}
-                      style={{
-                        width: "100vw",
-                        maxHeight: "50rem",
-                        objectFit: "fill",
-                      }}
-                      className="relative z-0"
-                    />
-                  </Flex>
+                  <Button
+                    type="primary"
+                    size="large"
+                    className="absolute bottom-20 z-10 px-10"
+                    onClick={() => navigate(paths.dashboard.products)}
+                  >
+                    SHOP NOW
+                  </Button>
                 </Flex>
               </Flex>
-            ))
+            </Flex>
+          ))
           : homePageCarouselForMobile.map((item, key) => (
-              <Flex key={key} justify="center">
-                <Flex style={contentStyle} justify="center">
-                  <Flex
-                    vertical
-                    className="bg-gray-100 flex items-center justify-center relative"
+            <Flex key={key} justify="center">
+              <Flex style={contentStyle} justify="center">
+                <Flex
+                  vertical
+                  className="flex items-center justify-center relative"
+                  style={{
+                    backgroundImage: `url(${item.image})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    width: '100vw',
+                    height: '20rem'
+                  }}
+                >
+                  <Typography.Text
+                    level={2}
+                    className="absolute bottom-40 z-10 text-[#0a4c36] text-center font-medium"
+                    style={{
+                      display: "inline-block",
+                      width:"80%",
+                      background: "rgba(255, 255, 255, 0.7)",
+                      padding: "15px 25px",
+                      borderRadius: "50px",
+                      fontFamily: "'Montserrat', sans-serif"
+                    }}
                   >
-                    <Typography.Text
-                      level={4}
-                      className="absolute bottom-50 z-10 text-white text-center"
-                      style={{ width: "100%" }}
-                    >
-                      {item.title || ""}
-                    </Typography.Text>
+                    <span>"{item.title || ""}"</span>
+                  </Typography.Text>
 
-                    <Button
-                      type="primary"
-                      size="middle"
-                      className="absolute bottom-7 z-10 px-4"
-                    >
-                      SHOP NOW
-                    </Button>
-
-                    <Image
-                      src={item.image}
-                      preview={false}
-                      style={{
-                        width: "100vw",
-                        objectFit: "fill",
-                      }}
-                      className="relative z-0"
-                    />
-                  </Flex>
+                  <Button
+                    type="primary"
+                    size="middle"
+                    className="absolute bottom-7 z-10 px-4"
+                    onClick={() => navigate(paths.dashboard.products)}
+                  >
+                    SHOP NOW
+                  </Button>
                 </Flex>
               </Flex>
-            ))}
+            </Flex>
+          ))}
       </Carousel>
       {/* </div> */}
       {loading ? (
@@ -147,17 +141,21 @@ const HomePage = () => {
         </>
       ) : (
         <>
-          <Flex className="px-2 xl:px-60 mt-12" justify="center">
+          <Flex vertical className="px-2 xl:px-60 mt-20 mb-12" justify="center">
+            <Typography.Title
+              level={screens.lg ? 2 : 3}
+              className="text-center text-[#0a4c36] mb-12"
+            >
+              Shop By Category
+            </Typography.Title>
             <Row
-              gutter={[10, 10]}
-              className="xl:px-8 mb-12 justify-center w-full"
+              gutter={[64, 64]}
+              className="justify-center w-full"
             >
               {categories.map((category, index) => (
-                <Col key={index} xs={12} md={8} lg={6} xl={3}>
-                  <Flex
-                    vertical
-                    className="text-center cursor-pointer"
-                    justify="center"
+                <Col key={index} xs={12} md={12} lg={12} xl={12}>
+                  <div 
+                    className="category-card hover:shadow-lg transition-all duration-300 rounded-lg cursor-pointer h-full"
                     onClick={() =>
                       navigate(paths.dashboard.products, {
                         state: {
@@ -168,22 +166,44 @@ const HomePage = () => {
                       })
                     }
                   >
-                    <Flex justify="center">
-                      <Image
-                        src={category.image}
-                        alt={category.name}
-                        preview={false}
-                        width={screens.lg ? 140 : 110}
-                        fallback="https://www.ugaoo.com/cdn/shop/files/2._Bestseller_0153b41a-9169-49f4-a322-5415b827d8bf.png?v=1739970441&width=360"
-                      />
+                    <Flex 
+                      vertical 
+                      className="text-center h-full"
+                      justify="space-between"
+                      align="center"
+                    >
+                      <div className="category-image-container p-4 flex justify-center">
+                        <Image
+                          src={category.image}
+                          alt={category.name}
+                          preview={false}
+                          width={screens.lg ? 120 : 100}
+                          height={screens.lg ? 120 : 100}
+                          style={{ objectFit: 'contain' }}
+                          fallback="https://www.ugaoo.com/cdn/shop/files/2._Bestseller_0153b41a-9169-49f4-a322-5415b827d8bf.png?v=1739970441&width=360"
+                        />
+                      </div>
+                      <Typography.Text 
+                        className="text-base font-medium mb-4 text-[#0a4c36] px-2"
+                        style={{ fontFamily: "'Montserrat', sans-serif" }}
+                      >
+                        {category.name}
+                      </Typography.Text>
                     </Flex>
-                    <Typography.Text className="text-xl">
-                      {category.name}
-                    </Typography.Text>
-                  </Flex>
+                  </div>
                 </Col>
               ))}
             </Row>
+            <Flex justify="center" className="mt-16">
+              <Button 
+                type="primary" 
+                size="large"
+                className="px-10 py-2 text-base font-medium h-auto"
+                onClick={() => navigate(paths.dashboard.products)}
+              >
+                VIEW ALL CATEGORIES
+              </Button>
+            </Flex>
           </Flex>
           {/* <Flex vertical className="px-2 xl:px-60 ">
         <Typography.Title
@@ -274,8 +294,8 @@ const HomePage = () => {
                             {Number(product.price) -
                               (product.discountType == "PERCENTAGE"
                                 ? Number(
-                                    (product.price * product.discount) / 100
-                                  )
+                                  (product.price * product.discount) / 100
+                                )
                                 : Number(product.discount))}
                           </Typography.Text>
                         </Flex>
@@ -322,7 +342,7 @@ const HomePage = () => {
           )}
         </>
       )}
-      <Flex
+      {/* <Flex
         vertical
         className="w-full bg-emerald-50/50 py-10 px-2 xl:px-60 mt-10"
         justify="center"
@@ -346,7 +366,7 @@ const HomePage = () => {
             </Col>
           ))}
         </Row>
-      </Flex>
+      </Flex> */}
     </Content>
   );
 };

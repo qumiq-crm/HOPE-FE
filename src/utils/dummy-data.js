@@ -10,15 +10,15 @@ export const homePageCarousel = [
   },
   {
     image: Carousel2,
-    title: "Care for Your Plants Like a Pro",
+    title: "Everything you need for your kitchen gardenunder one roof at affordable prices",
   },
   {
     image: Carousel3,
-    title: "Exclusive Plant Bundles",
+    title: "Everything can be shipped through the hope courier unit at a verey law charge ",
   },
   {
     image: Carousel4,
-    title: "Stylish Planters for Every Space",
+    title: "We can grow mushrooms organicall at home any special knowledge",
   },
 ];
 
@@ -29,16 +29,16 @@ export const homePageCarouselForMobile = [
   },
   {
     image: Carousel2,
-    title: "Care for Your Plants Like a Pro",
+    title: "Everything you need for your kitchen gardenunder one roof at affordable prices",
   },
   {
     image: Carousel3,
-    title: "Exclusive Plant Bundles",
+    title: "Everything can be shipped through the hope courier unit at a verey law charge ",
   },
   {
     image: Carousel4,
-    title: "Stylish Planters for Every Space",
-  },
+    title: "We can grow mushrooms organicall at home any special knowledge",
+  }
 ];
 
 export const categoryData = [

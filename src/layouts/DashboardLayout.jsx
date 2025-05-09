@@ -33,26 +33,21 @@ const DashboardLayout = ({ children }) => {
   const { categories, loading } = useCategoryList(true);
 
   const aboutLinks = [
-    "Our Story",
-    "Careers",
-    "Contact Us",
-    "Locate Stores",
-    "Own Grown",
-    "Garden Services & Maintenance",
+    ...categories.map((x)=>x.name)
   ];
 
-  const customerCareLinks = [
-    "Take The Plant Quiz",
-    "Track Order",
-    "Shipping Policy",
-    "Terms and Conditions",
-    "Privacy Policy",
-    "FAQs",
-    "Terms of Service",
-    "Refund policy",
-  ];
+  // const customerCareLinks = [
+  //   "Take The Plant Quiz",
+  //   "Track Order",
+  //   "Shipping Policy",
+  //   "Terms and Conditions",
+  //   "Privacy Policy",
+  //   "FAQs",
+  //   "Terms of Service",
+  //   "Refund policy",
+  // ];
 
-  const offersLinks = ["Plant Parent Rewards Club", "Ugaoo Coupons"];
+  // const offersLinks = ["Plant Parent Rewards Club", "Ugaoo Coupons"];
   useEffect(() => {
     console.log(categories, activeTab);
   }, [activeTab]);
@@ -139,9 +134,9 @@ const DashboardLayout = ({ children }) => {
       <Row className="bg-white py-12 px-4">
         <Flex vertical className="max-w-7xl mx-auto w-full">
           <Row gutter={[48, 48]}>
-            <Col xs={24} md={6}>
+            <Col xs={24} md={12}>
               <Title level={5} className="text-gray-700 mb-4">
-                ABOUT US
+                Links
               </Title>
               <List
                 dataSource={aboutLinks}
@@ -155,110 +150,24 @@ const DashboardLayout = ({ children }) => {
               />
             </Col>
 
-            <Col xs={24} md={6}>
-              <Title level={5} className="text-gray-700 mb-4">
-                CUSTOMER CARE
-              </Title>
-              <List
-                dataSource={customerCareLinks}
-                renderItem={(item) => (
-                  <List.Item className="!border-none !p-0 mb-2">
-                    <Link className="text-gray-600 hover:text-emerald-600">
-                      {item}
-                    </Link>
-                  </List.Item>
-                )}
-              />
-            </Col>
+            
 
-            <Col xs={24} md={6}>
-              <Title level={5} className="text-gray-700 mb-4">
-                OFFERS & REWARDS
-              </Title>
-              <List
-                dataSource={offersLinks}
-                renderItem={(item) => (
-                  <List.Item className="!border-none !p-0 mb-2">
-                    <Link className="text-gray-600 hover:text-emerald-600">
-                      {item}
-                    </Link>
-                  </List.Item>
-                )}
-              />
+            <Col xs={24} md={12}>
+              
 
               <Title level={5} className="text-gray-700 mt-8 mb-4">
                 GET IN TOUCH
               </Title>
               <Space direction="vertical" size="small" className="w-full">
                 <Text className="text-gray-600">
-                  WhatsApp us at: 7090970909
+                  WhatsApp us at: +917356828384
                 </Text>
-                <Text className="text-gray-600">Call: +91-9129912991</Text>
-                <Text className="text-gray-600">Email: support@ugaoo.com</Text>
+                <Text className="text-gray-600">Call: +917356828384</Text>
+                <Text className="text-gray-600">Email: agrarianhope@gmail.com</Text>
+                <Text className="text-gray-600">Address: Hope vattalur Malappuram Kerala 676507</Text>
               </Space>
             </Col>
 
-            <Col xs={24} md={6}>
-              <Title level={5} className="text-gray-700 mb-4">
-                SIGN UP FOR OUR NEWSLETTER
-              </Title>
-              <Input.Search
-                placeholder="Enter email address"
-                enterButton={
-                  <Button type="primary" className="bg-emerald-700">
-                    →
-                  </Button>
-                }
-                className="mb-4"
-              />
-              <Text className="block mb-8 text-gray-600">
-                For plant care tips, our featured plant of the week, exclusive
-                offers and discounts
-              </Text>
-
-              <Title level={5} className="text-gray-700 mb-4">
-                FOLLOW US
-              </Title>
-              <Space size="large" className="mb-8">
-                <Link>
-                  <FacebookFilled className="text-2xl text-gray-600 hover:text-emerald-600" />
-                </Link>
-                <Link>
-                  <TwitterOutlined className="text-2xl text-gray-600 hover:text-emerald-600" />
-                </Link>
-                <Link>
-                  <InstagramOutlined className="text-2xl text-gray-600 hover:text-emerald-600" />
-                </Link>
-                <Link>
-                  <LinkedinFilled className="text-2xl text-gray-600 hover:text-emerald-600" />
-                </Link>
-                <Link>
-                  <YoutubeFilled className="text-2xl text-gray-600 hover:text-emerald-600" />
-                </Link>
-              </Space>
-
-              <Title level={5} className="text-gray-700 mb-4">
-                Download App!
-              </Title>
-              <Space size="middle">
-                <Link>
-                  <Image
-                    src={APPSTORE}
-                    alt="Google Play"
-                    className="h-10 object-contain"
-                    preview={false}
-                  />
-                </Link>
-                <Link>
-                  <Image
-                    src={PLAYSTORE}
-                    alt="App Store"
-                    className="h-10 object-contain"
-                    preview={false}
-                  />
-                </Link>
-              </Space>
-            </Col>
           </Row>
         </Flex>
       </Row>
