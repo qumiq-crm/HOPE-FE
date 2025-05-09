@@ -14,7 +14,6 @@ const ProductModal = ({
   handleCancel,
   data,
   categoryData,
-  productImages,
   handleCreatePrd,
   handleUpdatePrd,
 }) => {
@@ -68,7 +67,6 @@ const ProductModal = ({
             isRequired
             classes=" rounded-sm"
             maxLength={50}
-            allowAlphabetsAndSpaceOnly
           />
           <TextInput
             name="brand"
@@ -130,16 +128,14 @@ const ProductModal = ({
             maxLength={10}
           />
           <TextInput
-            allowNumbersOnly
             name="quantity"
             label="Quantity"
             type="text"
             placeholder="Please enter quantity"
             isRequired
             classes=" rounded-sm"
-            maxLength={10}
           />
-          <SelectInput
+          {/* <SelectInput
             name="discountType"
             options={[
               { value: "PERCENTAGE", label: "Percentage" },
@@ -156,7 +152,7 @@ const ProductModal = ({
             placeholder="Please enter discount  "
             classes=" rounded-sm"
             maxLength={10}
-          />
+          /> */}
           <FileUploadInput
             name="productImage1"
             format="productImageFormat1"

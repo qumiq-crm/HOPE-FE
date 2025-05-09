@@ -8,7 +8,6 @@ import {
   Image,
   Input,
   Pagination,
-  Rate,
   Row,
   Skeleton,
   Space,
@@ -55,10 +54,10 @@ const ProductsPage = () => {
   };
 
   useEffect(() => {
-    console.log({state});
-    
+    console.log({ state });
+
     if (state?.categoryId) {
-      console.log({state},1);
+      console.log({ state }, 1);
       setFilters((val) => ({ ...val, selectedCat: state?.categoryId }));
     }
   }, [state]);
@@ -107,11 +106,10 @@ const ProductsPage = () => {
                   <Card
                     cover={
                       <Image
-                        src={
-                          product?.images?.[0]
-                        }
+                        src={product?.images?.[0]}
                         alt={product.name}
                         preview={false}
+                        height={350}
                         fallback="https://www.ugaoo.com/cdn/shop/files/2_72x-100.jpg?v=1739860291&width=360"
                       />
                     }
@@ -141,29 +139,28 @@ const ProductsPage = () => {
                         {product.name}
                       </Typography.Text>
                       <Flex gap={5} align="end">
-                        {Number(product.discount) > 0 ? (
-                          <Typography.Text delete className="text-gray-400">
-                            ₹ {product.price}
-                          </Typography.Text>
-                        ) : (
-                          ""
-                        )}
                         <Typography.Text
                           strong
                           className="text-lg text-[#149253]"
                         >
-                          From ₹{" "}
-                          {Number(product.price) -
-                            (product.discountType == "PERCENTAGE"
-                              ? Number((product.price * product.discount) / 100)
-                              : Number(product.discount))}
+                          {Number(product.price) == 0
+                            ? "Free"
+                            : `From ₹ 
+                            ${
+                              Number(product.price) -
+                              (product.discountType == "PERCENTAGE"
+                                ? Number(
+                                    (product.price * product.discount) / 100
+                                  )
+                                : Number(product.discount))
+                            }`}
                         </Typography.Text>
                       </Flex>
-                      <Rate
+                      {/* <Rate
                         disabled
                         allowHalf
                         defaultValue={(Math.random() * 2 + 3).toFixed(1)}
-                      />
+                      /> */}
                     </Space>
                   </Card>
                   <Button
