@@ -183,9 +183,9 @@ const ProductDetailsPage = () => {
             type="primary"
             className="font-roboto h-14 rounded-sm w-full rounded-l-none px-0 flex justify-center items-center"
             onClick={() => {
-              window.location.href = `https://wa.me/+919995144332?text=${product?.name
+              window.location.href = `https://wa.me/${ORDER_MOBILENO}?text=${product?.name
                 .split(" ")
-                .join("%20")}%20[${product?.SKUCode}]`;
+                .join("%20")}`;
             }}
             disabled={!(Number(product.quantity) > 0)}
           >
