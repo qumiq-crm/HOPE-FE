@@ -6,7 +6,6 @@ import {
   Flex,
   Grid,
   Image,
-  Rate,
   Row,
   Skeleton,
   Space,
@@ -18,11 +17,6 @@ import {
   homePageCarousel,
   homePageCarouselForMobile,
 } from "../../utils/dummy-data";
-import {
-  BulbOutlined,
-  ExperimentOutlined,
-  PayCircleFilled,
-} from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { paths } from "../../routes/paths";
 import useDashboard from "../../hooks/useDashboard";
@@ -42,7 +36,6 @@ const HomePage = () => {
   const navigate = useNavigate();
   const { categories, loading, newArrivals } = useDashboard();
 
- 
   return (
     <Content>
       {/* <div style={frameStyle}>
@@ -51,86 +44,86 @@ const HomePage = () => {
       <Carousel autoplay autoplaySpeed={3000}>
         {screens.lg
           ? homePageCarousel.map((item, key) => (
-            <Flex key={key} justify="center">
-              <Flex style={contentStyle} justify="center">
-                <Flex
-                  vertical
-                  className="bg-gray-100 flex items-center justify-center relative"
-                  style={{
-                    backgroundImage: `url(${item.image})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    width: '100vw',
-                    height: '50rem'
-                  }}
-                >
-                  <Typography.Text
-                    level={2}
-                    className="absolute bottom-40 z-10 text-[#0a4c36] text-center text-2xl font-medium"
+              <Flex key={key} justify="center">
+                <Flex style={contentStyle} justify="center">
+                  <Flex
+                    vertical
+                    className="bg-gray-100 flex items-center justify-center relative"
                     style={{
-                      display: "inline-block",
-                      background: "rgba(255, 255, 255, 0.7)",
-                      padding: "15px 25px",
-                      borderRadius: "50px",
-                      fontFamily: "'Montserrat', sans-serif"
+                      backgroundImage: `url(${item.image})`,
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                      width: "100vw",
+                      height: "50rem",
                     }}
                   >
-                    <span>"{item.title || ""}"</span>
-                  </Typography.Text>
+                    <Typography.Text
+                      level={2}
+                      className="absolute bottom-40 z-10 text-[#0a4c36] text-center text-2xl font-medium"
+                      style={{
+                        display: "inline-block",
+                        background: "rgba(255, 255, 255, 0.7)",
+                        padding: "15px 25px",
+                        borderRadius: "50px",
+                        fontFamily: "'Montserrat', sans-serif",
+                      }}
+                    >
+                      <span>&quot;{item.title || ""}&quot;</span>
+                    </Typography.Text>
 
-                  <Button
-                    type="primary"
-                    size="large"
-                    className="absolute bottom-20 z-10 px-10"
-                    onClick={() => navigate(paths.dashboard.products)}
-                  >
-                    SHOP NOW
-                  </Button>
+                    <Button
+                      type="primary"
+                      size="large"
+                      className="absolute bottom-20 z-10 px-10"
+                      onClick={() => navigate(paths.dashboard.products)}
+                    >
+                      SHOP NOW
+                    </Button>
+                  </Flex>
                 </Flex>
               </Flex>
-            </Flex>
-          ))
+            ))
           : homePageCarouselForMobile.map((item, key) => (
-            <Flex key={key} justify="center">
-              <Flex style={contentStyle} justify="center">
-                <Flex
-                  vertical
-                  className="flex items-center justify-center relative"
-                  style={{
-                    backgroundImage: `url(${item.image})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    width: '100vw',
-                    height: '20rem'
-                  }}
-                >
-                  <Typography.Text
-                    level={2}
-                    className="absolute bottom-40 z-10 text-[#0a4c36] text-center font-medium"
+              <Flex key={key} justify="center">
+                <Flex style={contentStyle} justify="center">
+                  <Flex
+                    vertical
+                    className="flex items-center justify-center relative"
                     style={{
-                      display: "inline-block",
-                      width:"80%",
-                      background: "rgba(255, 255, 255, 0.7)",
-                      padding: "15px 25px",
-                      borderRadius: "50px",
-                      fontFamily: "'Montserrat', sans-serif"
+                      backgroundImage: `url(${item.image})`,
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                      width: "100vw",
+                      height: "20rem",
                     }}
                   >
-                    <span>"{item.title || ""}"</span>
-                  </Typography.Text>
+                    <Typography.Text
+                      level={2}
+                      className="absolute bottom-40 z-10 text-[#0a4c36] text-center font-medium"
+                      style={{
+                        display: "inline-block",
+                        width: "80%",
+                        background: "rgba(255, 255, 255, 0.7)",
+                        padding: "15px 25px",
+                        borderRadius: "50px",
+                        fontFamily: "'Montserrat', sans-serif",
+                      }}
+                    >
+                      <span>&quot;{item.title || ""}&quot;</span>
+                    </Typography.Text>
 
-                  <Button
-                    type="primary"
-                    size="middle"
-                    className="absolute bottom-7 z-10 px-4"
-                    onClick={() => navigate(paths.dashboard.products)}
-                  >
-                    SHOP NOW
-                  </Button>
+                    <Button
+                      type="primary"
+                      size="middle"
+                      className="absolute bottom-7 z-10 px-4"
+                      onClick={() => navigate(paths.dashboard.products)}
+                    >
+                      SHOP NOW
+                    </Button>
+                  </Flex>
                 </Flex>
               </Flex>
-            </Flex>
-          ))}
+            ))}
       </Carousel>
       {/* </div> */}
       {loading ? (
@@ -148,13 +141,10 @@ const HomePage = () => {
             >
               Shop By Category
             </Typography.Title>
-            <Row
-              gutter={[64, 64]}
-              className="justify-center w-full"
-            >
+            <Row gutter={[64, 64]} className="justify-center w-full">
               {categories.map((category, index) => (
                 <Col key={index} xs={12} md={12} lg={12} xl={12}>
-                  <div 
+                  <div
                     className="category-card hover:shadow-lg transition-all duration-300 rounded-lg cursor-pointer h-full"
                     onClick={() =>
                       navigate(paths.dashboard.products, {
@@ -166,8 +156,8 @@ const HomePage = () => {
                       })
                     }
                   >
-                    <Flex 
-                      vertical 
+                    <Flex
+                      vertical
                       className="text-center h-full"
                       justify="space-between"
                       align="center"
@@ -179,11 +169,11 @@ const HomePage = () => {
                           preview={false}
                           width={screens.lg ? 120 : 100}
                           height={screens.lg ? 120 : 100}
-                          style={{ objectFit: 'contain' }}
+                          style={{ objectFit: "contain" }}
                           fallback="https://www.ugaoo.com/cdn/shop/files/2._Bestseller_0153b41a-9169-49f4-a322-5415b827d8bf.png?v=1739970441&width=360"
                         />
                       </div>
-                      <Typography.Text 
+                      <Typography.Text
                         className="text-base font-medium mb-4 text-[#0a4c36] px-2"
                         style={{ fontFamily: "'Montserrat', sans-serif" }}
                       >
@@ -195,8 +185,8 @@ const HomePage = () => {
               ))}
             </Row>
             <Flex justify="center" className="mt-16">
-              <Button 
-                type="primary" 
+              <Button
+                type="primary"
                 size="large"
                 className="px-10 py-2 text-base font-medium h-auto"
                 onClick={() => navigate(paths.dashboard.products)}
@@ -250,6 +240,7 @@ const HomePage = () => {
                           src={product.images?.[0]}
                           alt={product.name}
                           preview={false}
+                          height={500}
                           fallback="https://www.ugaoo.com/cdn/shop/files/2_72x-100.jpg?v=1739860291&width=360"
                         />
                       }
@@ -279,31 +270,28 @@ const HomePage = () => {
                           {product.name}
                         </Typography.Title>
                         <Flex gap={5} align="end">
-                          {Number(product.discount) > 0 ? (
-                            <Typography.Text delete className="text-gray-400">
-                              ₹ {product.price}
-                            </Typography.Text>
-                          ) : (
-                            ""
-                          )}
                           <Typography.Text
                             strong
                             className="text-lg text-[#149253]"
                           >
-                            From ₹{" "}
-                            {Number(product.price) -
+                            {Number(product.price) == 0
+                              ? "Free"
+                              : `From ₹ 
+                            ${
+                              Number(product.price) -
                               (product.discountType == "PERCENTAGE"
                                 ? Number(
-                                  (product.price * product.discount) / 100
-                                )
-                                : Number(product.discount))}
+                                    (product.price * product.discount) / 100
+                                  )
+                                : Number(product.discount))
+                            }`}
                           </Typography.Text>
                         </Flex>
-                        <Rate
+                        {/* <Rate
                           disabled
                           allowHalf
                           defaultValue={(Math.random() * 2 + 3).toFixed(1)}
-                        />
+                        /> */}
                         <Button
                           type="primary"
                           size="large"

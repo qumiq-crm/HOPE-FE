@@ -90,20 +90,15 @@ export const productSchema = Yup.object().shape({
     .min(0, "Price cannot be negative")
     .max(9999999999, "Price value is too large"), // max 10 digits
 
-  quantity: Yup.number()
-    .typeError("Quantity must be a valid number")
-    .required("Please enter the quantity")
-    .integer("Quantity must be an integer")
-    .positive("Quantity must be greater than 0")
-    .max(9999999999, "Quantity value is too large"), // max 10 digits
+  quantity: Yup.string().required("Please enter the quantity"),
 
-  discountType: Yup.string().optional(),
+  // discountType: Yup.string().optional(),
 
-  discount: Yup.number()
-    .typeError("Discount must be a valid number")
-    .optional()
-    .min(0, "Discount cannot be negative")
-    .max(1000000000, "Discount value is too large"),
+  // discount: Yup.number()
+  //   .typeError("Discount must be a valid number")
+  //   .optional()
+  //   .min(0, "Discount cannot be negative")
+  //   .max(1000000000, "Discount value is too large"),
 });
 
 export const categorySchema = Yup.object().shape({

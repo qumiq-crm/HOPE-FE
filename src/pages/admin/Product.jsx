@@ -47,6 +47,7 @@ const Product = () => {
     handleUpdatePrd,
     refetch,
     handleUpdatePrdStatus,
+    totalCount,
   } = useProduct(filters);
   const { categories } = useCategoryList();
   const handleActive = (prodId, status) => {
@@ -177,11 +178,14 @@ const Product = () => {
           }}
         />
         <Pagination
-          current={filters.page}
+          current={filters.offset}
           size="default"
-          className="text-end pt-7"
-          // onChange={handlePageChange}
-          // total={count}
+          pageSize={filters.limit}
+          total={totalCount}
+          className="text-end mt-7"
+          onChange={(page) => {
+            setFilters((val) => ({ ...val, offset: page }));
+          }}
           showSizeChanger={false}
         />
       </Flex>

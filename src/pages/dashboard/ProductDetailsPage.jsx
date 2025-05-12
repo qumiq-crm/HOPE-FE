@@ -6,7 +6,6 @@ import {
   Flex,
   Grid,
   Image,
-  Rate,
   Row,
   Skeleton,
   Space,
@@ -14,14 +13,12 @@ import {
   Typography,
 } from "antd";
 import { Content } from "antd/es/layout/layout";
-import saveFlat from "../../assets/icons/SaveFlat.svg";
-import cashBack from "../../assets/icons/ExtraCashback.svg";
 import { formatNumberWithLocalString } from "../../utils/priceFormat";
 import { CreditCardFilled } from "@ant-design/icons";
 import { useLocation, useNavigate } from "react-router-dom";
 import useProductDetails from "../../hooks/useProductsDetails";
 import { paths } from "../../routes/paths";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ORDER_MOBILENO } from "../../config-global";
 
 const { useBreakpoint } = Grid;
@@ -87,54 +84,20 @@ const ProductDetailsPage = () => {
             </Flex>
             {screens.md ? (
               <>
-                <Flex gap={20} vertical>
-                  <Flex
-                    gap={30}
-                    justify="start"
-                    align="center"
-                    className="mx-0 mt-5"
-                  >
-                    {Number(product?.discount || 0) > 0 && (
-                      <Flex justify="center" align="center" gap={10}>
-                        <Image
-                          preview={false}
-                          src={saveFlat}
-                          alt="Save flat icon"
-                        />
-                        <Text className="text-textDimGreen text-base">
-                          Save ₹{" "}
-                          {formatNumberWithLocalString(
-                            product.discountType == "PERCENTAGE"
-                              ? Number((product.price * product.discount) / 100)
-                              : Number(product.discount)
-                          )}
-                        </Text>
-                      </Flex>
-                    )}
-                    {/* <Flex justify="center" align="center" gap={10}>
-                      <Image
-                        preview={false}
-                        src={cashBack}
-                        alt="Earn Cashback"
-                      />
-                      <Text className="text-textDimGreen font-roboto text-base">
-                        Earn Cashback
-                      </Text>
-                    </Flex> */}
-                  </Flex>
-                </Flex>
                 <Flex gap={5} vertical className="mt-5">
                   <Flex gap={15} align="baseline" className="mx-0">
                     <Text className="text-neutral-950 text-2xl font-medium">
-                      ₹{" "}
-                      {formatNumberWithLocalString(
+                      {Number(product.price) == 0
+                        ? "Free"
+                        : `₹ 
+                      ${formatNumberWithLocalString(
                         Number(product.price) -
                           (product.discountType == "PERCENTAGE"
                             ? Number((product.price * product.discount) / 100)
                             : Number(product.discount))
-                      )}
+                      )}`}
                     </Text>
-                    {Number(product.discount) > 0 && (
+                    {/* {Number(product.discount) > 0 && (
                       <Text className="text-productText text-base">
                         Real price
                         <Text
@@ -144,16 +107,18 @@ const ProductDetailsPage = () => {
                           ₹ {product.price}
                         </Text>
                       </Text>
-                    )}
+                    )} */}
                   </Flex>
-
-                  <Text className="text-productText text-base font-normal">
-                    Inclusive of GST
-                  </Text>
                 </Flex>
                 <Flex gap={15} vertical className="mt-5">
                   <Text className="text-textBlack text-base font-normal">
-                    {product.description}
+                    {product?.description &&
+                      product?.description.split("\n").map((line, index) => (
+                        <React.Fragment key={index}>
+                          {line}
+                          <br />
+                        </React.Fragment>
+                      ))}
                   </Text>
                   <Flex gap={10} className="m-0 p-0">
                     {Number(product.quantity) > 0 && (
@@ -182,59 +147,29 @@ const ProductDetailsPage = () => {
                 >
                   <Col span={24}>
                     <Space size={8} className="flex-row items-end">
-                      <Typography.Text
-                        delete
-                        className="text-textGray text-lg font-roboto"
-                      >
-                        ₹ {product.price}
-                      </Typography.Text>
                       <Typography.Text className="text-textBlack font-semibold text-2xl">
-                        ₹{" "}
-                        {Number(product.price) -
+                        {Number(product.price) == 0
+                          ? "Free"
+                          : `₹ 
+                        ${
+                          Number(product.price) -
                           (product.discountType == "PERCENTAGE"
                             ? Number((product.price * product.discount) / 100)
-                            : Number(product.discount))}
+                            : Number(product.discount))
+                        }`}
                       </Typography.Text>
                     </Space>
                   </Col>
-
-                  <Row className="flex gap-2">
-                    <Col>
-                      <Flex gap={10} align="center">
-                        <Image
-                          preview={false}
-                          src={saveFlat}
-                          alt="Save flat icon"
-                          className="w-6"
-                        />
-                        <Typography.Text className="text-textDimGreen font-roboto text-xs">
-                          Save ₹{" "}
-                          {formatNumberWithLocalString(
-                            product.discountType == "PERCENTAGE"
-                              ? Number((product.price * product.discount) / 100)
-                              : Number(product.discount)
-                          )}
-                        </Typography.Text>
-                      </Flex>
-                    </Col>
-                    <Col>
-                      <Flex gap={10} align="center">
-                        <Image
-                          preview={false}
-                          src={cashBack}
-                          alt="Get Extra Cashback"
-                          className="w-6"
-                        />
-                        <Typography.Text className="text-textDimGreen font-roboto text-xs">
-                          Get Extra Cashback
-                        </Typography.Text>
-                      </Flex>
-                    </Col>
-                  </Row>
                 </Row>
                 <Row className="mt-2">
                   <Typography.Text className="text-textBlack font-inter font-normal text-base">
-                    {product.description}
+                    {product?.description &&
+                      product?.description.split("\n").map((line, index) => (
+                        <React.Fragment key={index}>
+                          {line}
+                          <br />
+                        </React.Fragment>
+                      ))}
                   </Typography.Text>
                 </Row>
               </>
@@ -265,7 +200,7 @@ const ProductDetailsPage = () => {
           </Button>
         </Col>
       </Row>
-      <Row className=" px-2 xl:px-72 my-5">
+      {/* <Row className=" px-2 xl:px-72 my-5">
         <Flex
           vertical
           justify="center"
@@ -279,7 +214,7 @@ const ProductDetailsPage = () => {
             {product.description}
           </Typography.Text>
         </Flex>
-      </Row>
+      </Row> */}
       <Divider className="my-5" />
       <Row className="" justify="center">
         <Flex vertical className="px-2 xl:px-60 w-full">
@@ -300,6 +235,7 @@ const ProductDetailsPage = () => {
                         src={product?.images?.[0]}
                         alt={product.name}
                         preview={false}
+                        height={500}
                         fallback="https://www.ugaoo.com/cdn/shop/files/2_72x-100.jpg?v=1739860291&width=360"
                       />
                     }
@@ -329,29 +265,28 @@ const ProductDetailsPage = () => {
                         {product.name}
                       </Typography.Title>
                       <Flex gap={5} align="end">
-                        {Number(product.discount) > 0 ? (
-                          <Typography.Text delete className="text-gray-400">
-                            ₹ {product.price}
-                          </Typography.Text>
-                        ) : (
-                          ""
-                        )}
                         <Typography.Text
                           strong
                           className="text-lg text-[#149253]"
                         >
-                          From ₹{" "}
-                          {Number(product.price) -
-                            (product.discountType == "PERCENTAGE"
-                              ? Number((product.price * product.discount) / 100)
-                              : Number(product.discount))}
+                          {Number(product.price) == 0
+                            ? "Free"
+                            : `From ₹ 
+                            ${
+                              Number(product.price) -
+                              (product.discountType == "PERCENTAGE"
+                                ? Number(
+                                    (product.price * product.discount) / 100
+                                  )
+                                : Number(product.discount))
+                            }`}
                         </Typography.Text>
                       </Flex>
-                      <Rate
+                      {/* <Rate
                         disabled
                         allowHalf
                         defaultValue={(Math.random() * 2 + 3).toFixed(1)}
-                      />
+                      /> */}
                       <Button
                         type="primary"
                         size="large"
