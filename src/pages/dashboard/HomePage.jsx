@@ -99,13 +99,13 @@ const HomePage = () => {
                   >
                     <Typography.Text
                       level={2}
-                      className="absolute bottom-40 z-10 text-[#0a4c36] text-center font-medium"
+                      className="absolute bottom-52 left-0 z-10 text-[#0a4c36] text-xs text-center font-medium"
                       style={{
                         display: "inline-block",
                         width: "80%",
                         background: "rgba(255, 255, 255, 0.7)",
                         padding: "15px 25px",
-                        borderRadius: "50px",
+                        borderRadius: "0px 50px 50px 0px",
                         fontFamily: "'Montserrat', sans-serif",
                       }}
                     >
@@ -125,6 +125,53 @@ const HomePage = () => {
               </Flex>
             ))}
       </Carousel>
+      <Flex
+        vertical
+        className="w-full bg-emerald-50/50 py-10 px-2 xl:px-60"
+        justify="center"
+      >
+        <Typography.Title
+          level={screens.lg ? 2 : 4}
+          className="text-center text-[#0a4c36] mb-12"
+        >
+          About Hope
+        </Typography.Title>
+
+        <Row justify="center" gutter={[48, 48]} className=" mx-auto mt-4">
+          <Col xs={24} className="text-center">
+            <Typography.Text className="text-base text-gray-700 md:text-xl">
+              &quot;HOPE&quot; was founded in 2012 by a group of like-minded
+              people who were distraught by the fact that many of their family
+              members were falling victims to cancer and later commenced its
+              operations in 2015, registered as Hope Agricultural & Charitable
+              Trust. <br /> Through the realization that a good percentage of
+              cancer cases are related to the use of pesiticide-laden vegetables
+              alone, (HOPE/The Trust) aims at educating every household to grow
+              organic vegetables in their own kitchen gardens and provides all
+              necessary support and materials on a nonprofit basis. <br />{" "}
+              (HOPE/The Trust) also has GST Registration, which makes it
+              possible to dispatch materials required for organic
+              farming/kitchen gardens throughout India. Seeds and saplings
+              (traditional categories) required for such is provided totally
+              free of cost. <br /> The entire state of Kerala has been
+              segregated into 4-5 separate zones and with the exception of Covid
+              times, (HOPE/The Trust) has been regularly organizing zone-wise
+              meets once every 4 months, with the sole purpose of educating and
+              creating awareness about organic farming among the local farmers
+              and recognizing and appreciating those farmers who lead by
+              example. <br /> An amount of Rs.200 per head is collected towards
+              registration fee for such events, and the surplus amount after
+              meeting food expenses is contributed towards the care of cancer
+              patients. The organizing costs of such events are completely borne
+              by (HOPE/The Trust) itself. <br /> Through regular assessment of
+              its operations, necessary steps are taken to extend more and more
+              suppport to kitchen farmers every year. We operate mainly through
+              social media and online organic agriculture forums and
+              communities.
+            </Typography.Text>
+          </Col>
+        </Row>
+      </Flex>
       {/* </div> */}
       {loading ? (
         <>
