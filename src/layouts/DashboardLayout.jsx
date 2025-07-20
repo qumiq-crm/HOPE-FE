@@ -84,18 +84,23 @@ const DashboardLayout = ({ children }) => {
             >
               {loading && <Skeleton active />}
               {!loading &&
-                categories.map((item, i) => (
+                [categories,{name:"events",route:"events"}].map((item, i) => (
                   <Typography.Text
                     key={i}
                     onClick={() => {
                       setActiveTab(i + 1);
-                      navigate(`${paths.dashboard.products}`, {
-                        state: {
-                          categoryName: item?.name,
-                          categoryDesc: item?.description,
-                          categoryId: item?._id,
-                        },
-                      });
+                      if(item.route==="events"){
+navigate("events");
+                      }else{
+
+                        navigate(`${paths.dashboard.products}`, {
+                          state: {
+                            categoryName: item?.name,
+                            categoryDesc: item?.description,
+                            categoryId: item?._id,
+                          },
+                        });
+                      }
                     }}
                     className={`cursor-pointer uppercase text-sm font-medium ${
                       activeTab === i + 1

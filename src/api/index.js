@@ -136,3 +136,68 @@ export const getProductDetailsApi = async (payload) => {
     return false;
   }
 };
+
+export const getEventList = async (payload) => {
+  try {
+    const {
+      limit: itemsPerPage,
+      offset: page,
+      searchText,
+      sortBy,
+      isActiveOnly,
+    } = payload;
+    const params = {
+      itemsPerPage,
+      page,
+      searchText,
+      sortBy,
+      isActiveOnly,
+    };
+    const resp = await ApiClient.get(`event/all`, { params });
+    const { data } = resp;
+    return data;
+  } catch (err) {
+    return false;
+  }
+};
+
+export const createEventApi = async (payload) => {
+  try {
+    const resp = await ApiClient.post(`event`, payload);
+    const { data } = resp;
+    return data;
+  } catch (err) {
+    return false;
+  }
+};
+
+export const updateEventApi = async (eventId, payload) => {
+  try {
+    const resp = await ApiClient.put(`event/${eventId}`, payload);
+    const { data } = resp;
+    return data;
+  } catch (err) {
+    return false;
+  }
+};
+
+export const getEventDetailsApi = async (payload) => {
+  try {
+    const { eventId } = payload;
+    const resp = await ApiClient.get(`events/${eventId}`);
+    const { data } = resp;
+    return data;
+  } catch (err) {
+    return false;
+  }
+};
+
+export const getAllPublicEvents = async () => {
+  try {
+    const resp = await ApiClient.get(`events/`);
+    const { data } = resp;
+    return data;
+  } catch (err) {
+    return [];
+  }
+};
