@@ -84,7 +84,7 @@ const DashboardLayout = ({ children }) => {
             >
               {loading && <Skeleton active />}
               {!loading &&
-                [categories,{name:"events",route:"events"}].map((item, i) => (
+                [...categories,{name:"events",route:"events"}].map((item, i) => (
                   <Typography.Text
                     key={i}
                     onClick={() => {
